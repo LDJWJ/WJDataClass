@@ -1,0 +1,48 @@
+추가 실습 1: tips 데이터셋에서 'total_bill'과 'size'를 특성으로 사용하여 선형 회귀 모델을 학습시키고, 테스트 데이터에 대한 예측값을 출력하는 코드를 작성해보세요.
+추가 실습 2: tips 데이터셋에서 'total_bill'과 'size'를 특성으로 사용하여 선형 회귀 모델을 학습시킬 때, 학습 데이터와 테스트 데이터를 80%, 20%로 나누는 코드를 작성해보세요.
+
+import seaborn as sns
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+
+# 데이터 로드
+tips = sns.load_dataset('tips')
+
+# 특성 데이터와 타깃 변수 분리
+X = tips[['total_bill', 'size']]
+y = tips['tip']
+
+# 데이터 분할
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# 모델 초기화 및 학습
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# 테스트 데이터로 예측
+y_pred = model.predict(X_test)
+
+# 예측값 출력
+print("예측값:", y_pred)
+
+추가 실습 3: 학습된 선형 회귀 모델의 회귀 계수와 절편을 출력하는 코드를 작성하세요.
+import seaborn as sns
+from sklearn.linear_model import LinearRegression
+
+# 데이터 로드
+tips = sns.load_dataset('tips')
+
+# 특성 데이터와 타깃 변수 분리
+X = tips[['total_bill', 'size']]
+y = tips['tip']
+
+# 모델 초기화 및 학습
+model = LinearRegression()
+model.fit(X, y)
+
+# 회귀 계수와 절편 출력
+print("회귀 계수:", model.coef_)
+print("절편:", model.intercept_)
+
+
+도전 실습 C4

@@ -1,0 +1,145 @@
+  
+[추가 실습1] 'tips' 데이터셋에서 time과 day를 특성으로 사용하여 다항 회귀 모델을 학습시키고, 테스트 데이터에 대한 예측값을 출력하는 코드를 작성해보세요.
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import LabelEncoder
+
+# 데이터 로드
+tips = sns.load_dataset('tips')
+
+# 'time' 컬럼을 숫자로 변환
+label_encoder = LabelEncoder()
+tips['time'] = label_encoder.fit_transform(tips['time'])
+tips['day'] = label_encoder.fit_transform(tips['day'])
+
+# 특성 데이터와 타깃 변수 분리
+X = tips[['time', 'day']]
+y = tips['tip']
+
+# 데이터 전처리 - 다항 회귀를 위한 특성 변환
+poly = PolynomialFeatures(degree=2)
+X_poly = poly.fit_transform(X)
+
+# 데이터 분할
+X_train, X_test, y_train, y_test = train_test_split(X_poly, y, test_size=0.2, random_state=42)
+
+# 다항 회귀 모델 학습
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# 테스트 데이터 예측
+y_pred = model.predict(X_test)
+
+# 예측값 출력
+print("예측값:", y_pred)
+  
+[추가 실습2] 'tips' 데이터셋에서 total_bill, sex, size, smoker를 특성으로 사용하여 다중 회귀 모델을 학습시키고, 테스트 데이터에 대한 예측값을 출력하는 코드를 작성해보세요.
+
+
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+
+# 데이터 로드
+tips = sns.load_dataset('tips')
+
+# 레이블 인코딩
+tips['sex'] = tips['sex'].map({'Female': 0, 'Male': 1})
+tips['smoker'] = tips['smoker'].map({'No': 0, 'Yes': 1})
+
+# 특성 데이터와 타깃 변수 분리
+X = tips[['total_bill', 'sex', 'size', 'smoker']]
+y = tips['tip']
+
+# 데이터 분할
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# 다중 회귀 모델 학습
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# 테스트 데이터 예측
+y_pred = model.predict(X_test)
+
+# 예측값 출력
+print("예측값:", y_pred)
+
+[추가 실습3] 'tips' 데이터셋에서 total_bill, sex, size, smoker를 특성으로 사용하여 다중 회귀 모델을 학습하고, 테스트 데이터에 대한 예측값을 출력하는 코드를 작성하세요. 그리고 예측값과 실제값의 차이를 평가하는 지표로 평균 절대 오차(MAE)를 사용하여 모델의 성능을 평가하세요.
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error
+
+# 데이터 로드
+tips = sns.load_dataset('tips')
+
+# 레이블 인코딩
+tips['sex'] = tips['sex'].map({'Female': 0, 'Male': 1})
+tips['smoker'] = tips['smoker'].map({'No': 0, 'Yes': 1})
+
+# 특성 데이터와 타깃 변수 분리
+X = tips[['total_bill', 'sex', 'size', 'smoker']]
+y = tips['tip']
+
+# 데이터 분할
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# 다중 회귀 모델 학습
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# 테스트 데이터 예측
+y_pred = model.predict(X_test)
+
+# 예측값 출력
+print("예측값:", y_pred)
+
+# MAE 평가
+mae = mean_absolute_error(y_test, y_pred)
+print("MAE:", mae)
+
+
+[도전 실습1] 'tips' 데이터셋에서 total_bill, sex, size, smoker를 특성으로 사용하여 다중 회귀 모델을 학습시키고, 테스트 데이터에 대한 예측값을 출력한 뒤, 실제값과 예측값의 차이를 시각화하는 코드를 작성해보세요. 예측값과 실제값의 차이를 나타내는 그래프를 생성하고, 모델의 예측 성능을 평가하는데 도움을 줄 수 있는 시각화를 포함하여 코드를 작성해보세요.
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+
+# 데이터 로드
+tips = sns.load_dataset('tips')
+
+# 특성 데이터와 타깃 변수 분리
+X = tips[['total_bill', 'sex', 'size', 'smoker']]
+y = tips['tip']
+
+# 데이터 분할
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# 다중 회귀 모델 학습
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# 테스트 데이터 예측
+y_pred = model.predict(X_test)
+
+# 실제값과 예측값의 차이 시각화
+residuals = y_test - y_pred
+plt.scatter(y_test, residuals)
+plt.xlabel('Actual Values')
+plt.ylabel('Residuals')
+plt.title('Residual Plot')
+plt.show()
+
+# 모델의 예측 성능 평가
+mse = mean_squared_error(y_test, y_pred)
+print("Mean Squared Error (MSE):", mse)
+
+
+
+[정리해보기] 단순 선형 회귀와 다중 선형 회귀의 차이는 무엇일까요?
+[정리해보기]
+단순 선형 회귀는 하나의 독립 변수와 종속 변수 사이의 선형 관계를 모델링하는 회귀 모델입니다. 즉, 하나의 특성을 사용하여 종속 변수를 예측합니다.
+반면에, 다중 선형 회귀는 여러 개의 독립 변수와 종속 변수 사이의 선형 관계를 모델링하는 회귀 모델입니다. 여러 개의 특성을 사용하여 종속 변수를 예측합니다. 다중 선형 회귀는 더 복잡한 데이터 패턴을 모델링할 수 있으며, 여러 개의 특성이 종속 변수에 미치는 영향을 동시에 고려할 수 있습니다.

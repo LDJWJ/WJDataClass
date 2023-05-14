@@ -1,0 +1,155 @@
+
+[기본 실습 1] 코드: 'train_test_split' 함수의 'test_size' 파라미터 값을 조정하여 학습 데이터와 테스트 데이터의 비율을 변경해보세요.
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+
+# 데이터 로드
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+# 데이터 분할
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)  # 비율 변경 (예: 0.3)
+
+# 모델 초기화 및 학습
+model = KNeighborsClassifier(n_neighbors=3)
+model.fit(X_train, y_train)
+
+# 정확도 평가
+accuracy = model.score(X_test, y_test)
+print("Accuracy:", accuracy)
+
+[기본 실습 2] 코드: 'KNeighborsClassifier' 모델의 'n_neighbors' 파라미터 값을 변경하여 다양한 이웃 수(1-10)를 시도해보세요.
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+
+# 데이터 로드
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+# 데이터 분할
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# 다양한 이웃 수 시도
+for n_neighbors in range(1, 11):
+    # 모델 초기화 및 학습
+    model = KNeighborsClassifier(n_neighbors=n_neighbors)
+    model.fit(X_train, y_train)
+
+    # 정확도 평가
+    accuracy = model.score(X_test, y_test)
+    print("이웃 수:", n_neighbors, "Accuracy:", accuracy)
+
+
+
+================================
+
+
+[추가 실습 1] 코드: 'train_test_split' 함수의 'test_size' 파라미터 값을 조정하여 학습 데이터와 테스트 데이터의 비율을 변경해보세요.
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+
+# 데이터 로드
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+# 데이터 분할
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# 모델 초기화 및 학습
+model = KNeighborsClassifier(n_neighbors=3)
+model.fit(X_train, y_train)
+
+# 정확도 평가
+accuracy = model.score(X_test, y_test)
+print("Accuracy:", accuracy)
+
+[추가 실습 2] 코드: 'KNeighborsClassifier' 모델의 'n_neighbors' 파라미터 값을 변경하여 다양한 이웃 수를 시도해보세요.
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+
+# 데이터 로드
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+# 데이터 분할
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# 모델 초기화 및 학습
+model = KNeighborsClassifier(n_neighbors=5)  # 이웃 수 변경 (예: 5)
+model.fit(X_train, y_train)
+
+# 정확도 평가
+accuracy = model.score(X_test, y_test)
+print("Accuracy:", accuracy)
+
+
+[추가 실습 3] 코드: 'train_test_split' 함수의 'test_size' 파라미터 값을 조정하여 학습 데이터와 테스트 데이터의 비율을 변경해보세요.
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+
+# 데이터 로드
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+# 데이터 분할
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)  # 비율 변경 (예: 0.2)
+
+# 모델 초기화 및 학습
+model = KNeighborsClassifier(n_neighbors=3)
+model.fit(X_train, y_train)
+
+# 정확도 평가
+accuracy = model.score(X_test, y_test)
+print("Accuracy:", accuracy)
+
+
+[도전 실습1] 문제: 'iris' 데이터셋을 사용하여 다른 분류 알고리즘을 시도해보세요. 예를 들어, 로지스틱 회귀(Logistic Regression), 결정 트리(Decision Tree), 랜덤 포레스트(Random Forest) 등의 분류 모델을 사용하여 데이터를 학습하고 성능을 평가해보세요. 각 모델의 성능을 비교하고 결과를 해석해보세요.
+import seaborn as sns
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+
+# 데이터 로드
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+# 데이터 분할
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# 로지스틱 회귀 모델 학습 및 평가
+lr_model = LogisticRegression()
+lr_model.fit(X_train, y_train)
+lr_accuracy = lr_model.score(X_test, y_test)
+
+# 결정 트리 모델 학습 및 평가
+dt_model = DecisionTreeClassifier()
+dt_model.fit(X_train, y_train)
+dt_accuracy = dt_model.score(X_test, y_test)
+
+# 랜덤 포레스트 모델 학습 및 평가
+rf_model = RandomForestClassifier()
+rf_model.fit(X_train, y_train)
+rf_accuracy = rf_model.score(X_test, y_test)
+
+# 결과 출력
+print("로지스틱 회귀 모델 정확도:", lr_accuracy)
+print("결정 트리 모델 정확도:", dt_accuracy)
+print("랜덤 포레스트 모델 정확도:", rf_accuracy)
+
+# 결과 해석
+# 각 모델의 성능을 비교해보면, 랜덤 포레스트 모델이 가장 높은 정확도를 보여줍니다.
+# 로지스틱 회귀 모델과 결정 트리 모델도 상대적으로 높은 정확도를 갖지만,
+# 랜덤 포레스트 모델이 가장 우수한 분류 성능을 나타내는 것으로 나타납니다.

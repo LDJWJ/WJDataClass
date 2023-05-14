@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Python 코드</title>
+  <style>
+    .keyword {
+      color: blue;
+      font-weight: bold;
+    }
+    .comment {
+      color: green;
+      font-style: italic;
+    }
+  </style>
+</head>
+<script>
+    function highlightCode() {
+      var pythonCode = document.getElementById('pythonCode').value;
+      var highlightedCode = highlightPythonCode(pythonCode);
+      document.getElementById('highlightedCode').innerHTML = highlightedCode;
+
+      // pythonCode 영역 숨기기
+      document.getElementById('pythonCode').style.display = 'none';
+    }
+
+    function highlightPythonCode(code) {
+      code = code.replace(/</g, '&lt;').replace(/>/g, '&gt;'); // Escape HTML tags
+
+      var keywords = ['and', 'as', 'assert', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield'];
+
+      code = code.replace(/([A-Za-z_]\w*)/g, function(match, p1) {
+        if (keywords.includes(p1)) {
+          return '<span class="keyword">' + p1 + '</span>';
+        }
+        return match;
+      });
+
+      code = code.replace(/(#[^\n]*)/g, '<span class="comment">$1</span>');
+
+      return '<pre>' + code + '</pre>';
+    }
+  </script>
+<body>
+    <textarea id="pythonCode" rows="10" cols="50">
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+
+# 데이터 로드
+iris = load_iris()
+X_train, X_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.2, random_state=42)
+
+# KNN 모델 학습 및 정확도 출력
+accuracy = KNeighborsClassifier(n_neighbors=3).fit(X_train, y_train).score(X_test, y_test)
+print("Accuracy:", accuracy)
+    </textarea>
+    <button onclick="highlightCode()">Highlight Code</button>
+    <div id="highlightedCode"></div>
+</body>
+</html>

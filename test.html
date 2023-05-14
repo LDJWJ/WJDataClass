@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Code Highlighting</title>
+  <style>
+    pre {
+      background-color: #f4f4f4;
+      padding: 10px;
+      font-family: Consolas, monospace;
+      font-size: 14px;
+    }
+
+    .keyword {
+      color: #0000ff;
+      font-weight: bold;
+    }
+
+    .comment {
+      color: #008000;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1 class="text-center mt-5">Python Code Highlighting</h1>
+    <div>
+      <textarea id="pythonCode" rows="10" cols="50"></textarea>
+      <button onclick="highlightCode()">Highlight Code</button>
+    </div>
+    <div id="highlightedCode"></div>
+  </div>
+
+  <script>
+    function highlightCode() {
+      var pythonCode = document.getElementById('pythonCode').value;
+      var highlightedCode = highlightPythonCode(pythonCode);
+      document.getElementById('highlightedCode').innerHTML = highlightedCode;
+    }
+
+    function highlightPythonCode(code) {
+      code = code.replace(/</g, '&lt;').replace(/>/g, '&gt;'); // Escape HTML tags
+
+      var keywords = ['and', 'as', 'assert', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield'];
+
+      code = code.replace(/([A-Za-z_]\w*)/g, function(match, p1) {
+        if (keywords.includes(p1)) {
+          return '<span class="keyword">' + p1 + '</span>';
+        }
+        return match;
+      });
+
+      code = code.replace(/(#[^\n]*)/g, '<span class="comment">$1</span>');
+
+      return '<pre>' + code + '</pre>';
+    }
+  </script>
+</body>
+</html>
