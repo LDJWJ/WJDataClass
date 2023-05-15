@@ -6,6 +6,15 @@
   <title>Trendy Table Example</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <style>
+    .title {
+      font-size: 36px;
+      font-weight: bold;
+      text-align: center;
+      color: #007bff; /* 새로운 색상 값으로 변경 */
+      margin-top: 50px;
+      margin-bottom: 30px;
+    }
+
     .btn-group .btn {
       margin-right: 10px;
     }
@@ -26,7 +35,10 @@
     }
 
     .btn-group {
-      margin-bottom: 10px;
+      display: flex;
+      justify-content: start; /* 왼쪽 정렬로 변경 */
+      align-items: center;
+      flex-wrap: wrap; /* 필요에 따라 버튼들을 여러 줄에 걸쳐 표시 */
     }
 
     .btn-group .btn {
@@ -34,6 +46,7 @@
       background-color: #007bff;
       color: #fff;
       border: none;
+      margin: 5px;
     }
 
     .btn-group .btn:hover {
@@ -44,7 +57,7 @@
 <body>
 
   <div class="container">
-    <h1 class="text-center mt-5">머신러닝 시작하기</h1>
+    <h1 class="title">머신러닝 시작하기</h1>
     <table class="table">
       <thead class="thead-dark">
         <tr>
@@ -82,28 +95,46 @@
           </td>
         </tr>
         <tr>
+          <td> 머신러닝 시작하기 </td>
+          <td> ML_BASIC_01_03 </td>
+          <td> 회귀 모델 평가(MSE, MAE 등) </td>
+          <td>
+            <div class="btn-group">
+              <a href="./ML_BASIC/ML_BASIC_01_03_C1.html" class="btn btn-primary">Code1</a>
+              <a href="./ML_BASIC/ML_BASIC_01_03_C1B.html" class="btn btn-primary">Code2</a>
+              <a href="./ML_BASIC/ML_BASIC_01_03_C2.html" class="btn btn-primary">초급</a>
+              <a href="./ML_BASIC/ML_BASIC_01_03_C3.html" class="btn btn-primary">중급</a>
+              <a href="./ML_BASIC/ML_BASIC_01_03_C4.html" class="btn btn-primary">고급</a>
+            </div>
+          </td>
+          </tr>
+          <tr>
             <td> 머신러닝 시작하기 </td>
-            <td> ML_BASIC_01_03 </td>
-            <td> 회귀 모델 평가(MSE, MAE 등) </td>
+            <td> ML_BASIC_01_04 </td>
+            <td> 의사결정트리(Decision Tree) <br> 01. 유방암 데이터 셋 </td>
             <td>
               <div class="btn-group">
-                <a href="./ML_BASIC/ML_BASIC_01_03_C1.html" class="btn btn-primary">Code1</a>
-                <a href="./ML_BASIC/ML_BASIC_01_03_C1B.html" class="btn btn-primary">Code2</a>
-                <a href="./ML_BASIC/ML_BASIC_01_03_C2.html" class="btn btn-primary">초급</a>
-                <a href="./ML_BASIC/ML_BASIC_01_03_C3.html" class="btn btn-primary">중급</a>
-                <a href="./ML_BASIC/ML_BASIC_01_03_C4.html" class="btn btn-primary">고급</a>
+                <a href="./ML_BASIC/ML_BASIC_01_04_C1.html" class="btn btn-primary">Code</a>
               </div>
             </td>
           </tr>
           <tr>
-            <td> -- </td>
-            <td>STAT_BASIC_00</td>
-            <td> -- </td>
+            <td> 머신러닝 시작하기 </td>
+            <td> ML_BASIC_01_05 </td>
+            <td> 의사결정트리(Decision Tree) <br> 시각화 해보기(Colab 환경) </td>
             <td>
               <div class="btn-group">
-                <a href="https://github.com/LDJWJ/RBasic/tree/master/01_RClass" class="btn btn-primary">초급</a>
-                <a href="https://example.com/link2" class="btn btn-primary">중급</a>
-                <a href="https://example.com/link3" class="btn btn-primary">고급</a>
+                <a href="./ML_BASIC/ML_BASIC_01_05_C1.html" class="btn btn-primary">Code</a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td> 머신러닝 시작하기 </td>
+            <td> ML_BASIC_01_06 </td>
+            <td> 의사결정트리(Decision Tree) <br> 트리의 특성 중요도 </td>
+            <td>
+              <div class="btn-group">
+                <a href="./ML_BASIC/ML_BASIC_01_06_C1.html" class="btn btn-primary">Code</a>
               </div>
             </td>
           </tr>

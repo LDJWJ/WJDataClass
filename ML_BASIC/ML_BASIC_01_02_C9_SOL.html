@@ -1,82 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Python 코드</title>
-  <style>
-    .keyword {
-      color: blue;
-      font-weight: bold;
-    }
-    .comment {
-      color: green;
-      font-style: italic;
-      font-family: 'D2Coding', monospace;
-    }
-    pre {
-      font-family: 'D2Coding', monospace;
-    }
-  </style>
-</head>
-<script>
-  window.addEventListener('DOMContentLoaded', function() {
-    highlightCode();
-  });
-
-  function highlightCode() {
-    var pythonCode = document.getElementById('pythonCode').value;
-    var highlightedCode = highlightPythonCode(pythonCode);
-    document.getElementById('highlightedCode').innerHTML = highlightedCode;
-
-    // pythonCode 영역 숨기기
-    document.getElementById('pythonCode').style.display = 'none';
-  }
-
-  function highlightPythonCode(code) {
-    code = code.replace(/</g, '&lt;').replace(/>/g, '&gt;'); // Escape HTML tags
-
-    var keywords = ['and', 'as', 'assert', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield'];
-
-    code = code.replace(/([A-Za-z_]\w*)/g, function(match, p1) {
-      if (keywords.includes(p1)) {
-        return '<span class="keyword">' + p1 + '</span>';
-      }
-      return match;
-    });
-
-    code = code.replace(/(#[^\n]*)/g, '<span class="comment">$1</span>');
-
-    return '<pre>' + code + '</pre>';
-  }
-</script>
 <body>
-  <textarea id="pythonCode" rows="10" cols="50">
-    import seaborn as sns
-    from sklearn.linear_model import LinearRegression
-    from sklearn.model_selection import train_test_split
-    
-    # 데이터 로드
-    tips = sns.load_dataset('tips')
-    
-    # 특성 데이터와 타깃 변수 분리
-    X = tips[['total_bill', 'size']]
-    y = tips['tip']
-    
-    # 데이터 분할
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    
-    # 모델 초기화 및 학습
-    model = LinearRegression()
-    model.fit(X_train, y_train)
-    
-    # 테스트 데이터로 예측
-    y_pred = model.predict(X_test)
-    y_pred
-    # 회귀 계수 및 절편 출력
-    print("회귀 계수:", model.coef_)
-    print("절편:", model.intercept_)
-  </textarea>
-  <div id="highlightedCode"></div>
-  <button onclick="goBack()">돌아가기</button>
+  [도전 실습1] 예측 및 평가: 학습된 모델을 사용하여 테스트 데이터에 대한 팁을 예측하고, 예측 결과와 실제값을 비교하여 모델의 성능을 평가하세요. 적절한 평가 지표를 선택하고 평가 결과를 해석하세요.
+  <br><br>
+  <button onclick="goBack()">홈으로</button>
   <script>
     function goBack() {
       window.location.href = "../01_MLSTART.html";
