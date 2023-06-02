@@ -102,7 +102,7 @@ model.evaluate(X, y)
       <pre id="practiceCode">
 기본 01. 기본 코드 실행 확인.(코드 공유하기)
 
-기본 02. 피처(특징)을 우리는 'sepal_length', 'sepal_width'로 선택했다. 'petal_length'를 하나 더 추가해서 딥러닝 모델을 만들어보자.
+기본 02. 피처(특징)을 우리는 'sepal_length'(꽃받침 길이), 'sepal_width'(꽃받침 너비)로 선택했다. 'petal_length'를 하나 더 추가해서 딥러닝 모델을 만들어보자.
       </pre>
     `;
     document.getElementById('practiceCode').style.fontSize = '15px';
@@ -114,9 +114,11 @@ model.evaluate(X, y)
     document.getElementById('practiceContainer').innerHTML = `
       <h3>레벨업 미션 문제</h3>
       <pre id="practiceCode">
-레벨업 01. 피처(4개)를 전부 사용해서 딥러닝 모델을 만들어보자.
+레벨업 01. IRIS의 특징(피처)를 전부를 사용해서 딥러닝 모델을 만들어보자.
 
-레벨업 02. loss를 sparse_categorical_crossentropy를 사용했다. categorical_crossentropy를 loss로 사용해서 딥러닝 모델을 구축해 보자.
+레벨업 02. 손실함수(loss)를 sparse_categorical_crossentropy를 사용했다. categorical_crossentropy를 loss로 사용해서 딥러닝 모델을 구축해 보자.
+
+레벨업 03. [리서치] sparse_categorical_crossentropy와 categorical_crossentropy의 차이는 무엇일까?(검색 후, 결과 정리 공유)
 
       </pre>
     `;
