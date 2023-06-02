@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>딥러닝 시작, 캐글 대회 참여</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    .title {
+      font-size: 36px;
+      font-weight: bold;
+      text-align: center;
+      color: #007bff;
+      margin-top: 50px;
+      margin-bottom: 30px;
+    }
+
+    .btn-group .btn {
+      margin-right: 10px;
+    }
+
+    .table {
+      border-collapse: separate;
+      border-spacing: 0;
+      width: 100%;
+    }
+
+    .table thead th {
+      background-color: #343a40;
+      color: #fff;
+    }
+
+    .table tbody td {
+      border-top: 1px solid #dee2e6;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-group .btn {
+      border-radius: 0;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      margin: 5px;
+    }
+
+    .btn-group .btn:hover {
+      background-color: #0056b3;
+    }
+
+    .checkbox-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1 class="title">딥러닝 시작하기, 캐글 대회 참여</h1>
+    <div class="checkbox-container">
+      <input type="checkbox" id="showRowsCheckbox" onchange="toggleTableRows()">
+      <label for="showRowsCheckbox">테이블 행 보이기/숨기기</label>
+    </div>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th>구분</th>
+          <th>수업코드</th>
+          <th>내용</th>
+          <th>미션</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td> 딥러닝 시작하기 </td>
+          <td> DL_BASIC_01_01 </td>
+          <td> 구글 코랩 시작하기 </td>
+          <td>
+            <div class="btn-group">
+              <a href="./DL_BASIC/DL_BASIC_01_01_C1.html" class="btn btn-primary"> 실습 </a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td> 딥러닝 시작하기 </td>
+          <td> DL_BASIC_01_02 </td>
+          <td> 구글 코랩 시작하기 </td>
+          <td>
+            <div class="btn-group">
+              <a href="./DL_BASIC/DL_BASIC_01_01_C1.html" class="btn btn-primary"> 실습 </a>
+            </div>
+          </td>
+        </tr>
+        <!-- Rest of the table rows... -->
+      </tbody>
+    </table>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script>
+    function toggleTableRows() {
+      var checkbox = document.getElementById('showRowsCheckbox');
+      var table = document.querySelector('table');
+      var rows = table.getElementsByTagName('tr');
+  
+      for (var i = 0; i < rows.length; i++) {
+        var row = rows[i];
+        // Check if the row is the title row
+        if (row !== table.rows[0]) {
+          if (checkbox.checked) {
+            row.style.display = ''; // Show the row
+          } else {
+            row.style.display = 'none'; // Hide the row
+          }
+        }
+      }
+    }
+</script>
+</body>
+</html>
