@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Python 코드</title>
+  <style>
+    .keyword {
+      color: blue;
+      font-weight: bold;
+    }
+    .comment {
+      color: green;
+      font-style: italic;
+      font-family: 'D2Coding', monospace;
+    }
+    pre {
+      font-family: 'D2Coding', monospace;
+    }
+  </style>
+</head>
+<script>
+  window.addEventListener('DOMContentLoaded', function() {
+    highlightCode();
+  });
+
+  function highlightCode() {
+    var pythonCode = document.getElementById('pythonCode').value;
+    var highlightedCode = highlightPythonCode(pythonCode);
+    document.getElementById('highlightedCode').innerHTML = highlightedCode;
+
+    // pythonCode 영역 숨기기
+    document.getElementById('pythonCode').style.display = 'none';
+  }
+
+  function highlightPythonCode(code) {
+    code = code.replace(/</g, '&lt;').replace(/>/g, '&gt;'); // Escape HTML tags
+
+    var keywords = ['and', 'as', 'assert', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield'];
+
+    code = code.replace(/([A-Za-z_]\w*)/g, function(match, p1) {
+      if (keywords.includes(p1)) {
+        return '<span class="keyword">' + p1 + '</span>';
+      }
+      return match;
+    });
+
+    code = code.replace(/(#[^\n]*)/g, '<span class="comment">$1</span>');
+
+    return '<pre>' + code + '</pre>';
+  }
+</script>
+<body>
+  <div id="codeContainer">
+  <textarea id="pythonCode" rows="10" cols="50">
+import seaborn as sns
+
+# Iris 데이터셋 불러오기
+iris = sns.load_dataset('iris')
+
+# 데이터의 입력
+sel = ['sepal_length','sepal_width']
+X = iris[sel]
+
+# 데이터의 출력 
+y = iris['species']
+
+# 출력, 문자를 숫자로 변경하기
+from sklearn.preprocessing import LabelEncoder
+
+le = LabelEncoder()
+y = le.fit_transform(y)
+
+# 입력과 출력 확인
+print(X, y)
+  </textarea>
+  <div id="highlightedCode"></div>
+  </div>
+  <div id="practiceContainer" style="display: none;"></div>
+  <!-- <button onclick="goBack()">홈으로</button> -->
+  <button onclick="goNext01()">기본 미션</button>
+  <button onclick="goNext02()">레벨업 미션</button><br><br>
+  <div> * 성실한 태도, 작은 나의 땀과 노력이 모여 미래를 만듭니다. 정직, 성실 소중한 가치</div>
+</div>
+<script>
+  function goBack() {
+    window.location.href = "../01_DLSTART.html";
+  }
+
+  function goNext01() {
+    /* document.getElementById('codeContainer').style.display = 'none'; */
+    document.getElementById('practiceContainer').style.display = 'block';
+    document.getElementById('practiceContainer').innerHTML = `
+      <h3>기본 미션 문제</h3>
+      <pre id="practiceCode">
+기본 01. 기본 코드 실행 확인.(코드 공유하기)
+
+기본 02. --
+      </pre>
+    `;
+    document.getElementById('practiceCode').style.fontSize = '15px';
+  }
+
+  function goNext02() {
+    /* document.getElementById('codeContainer').style.display = 'none'; */
+    document.getElementById('practiceContainer').style.display = 'block';
+    document.getElementById('practiceContainer').innerHTML = `
+      <h3>레벨업 미션 문제</h3>
+      <pre id="practiceCode">
+레벨업 01. 'petal_length'의 피처(특징)도 데이터의 입력에 추가해 보기(코드 공유하기)
+
+레벨업 02. map함수를 이용하여 라벨 인코딩 해보기
+
+      </pre>
+    `;
+    document.getElementById('practiceCode').style.fontSize = '15px';
+  }
+  function goNext03() {
+    /* document.getElementById('codeContainer').style.display = 'none'; */
+    document.getElementById('practiceContainer').style.display = 'block';
+    document.getElementById('practiceContainer').innerHTML = `
+      <h2>미션 도전 문제</h2>
+      <pre id="practiceCode">
+레벨업 01. -- (코드-댓글 남기기)
+      </pre>
+    `;
+    document.getElementById('practiceCode').style.fontSize = '15px';
+  }
+</script>
+</body>
+</html>

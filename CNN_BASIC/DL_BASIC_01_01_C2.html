@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Python 코드</title>
+  <style>
+    .keyword {
+      color: blue;
+      font-weight: bold;
+    }
+    .comment {
+      color: green;
+      font-style: italic;
+      font-family: 'D2Coding', monospace;
+    }
+    pre {
+      font-family: 'D2Coding', monospace;
+    }
+  </style>
+</head>
+<script>
+  window.addEventListener('DOMContentLoaded', function() {
+    highlightCode();
+  });
+
+  function highlightCode() {
+    var pythonCode = document.getElementById('pythonCode').value;
+    var highlightedCode = highlightPythonCode(pythonCode);
+    document.getElementById('highlightedCode').innerHTML = highlightedCode;
+
+    // pythonCode 영역 숨기기
+    document.getElementById('pythonCode').style.display = 'none';
+  }
+
+  function highlightPythonCode(code) {
+    code = code.replace(/</g, '&lt;').replace(/>/g, '&gt;'); // Escape HTML tags
+
+    var keywords = ['and', 'as', 'assert', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield'];
+
+    code = code.replace(/([A-Za-z_]\w*)/g, function(match, p1) {
+      if (keywords.includes(p1)) {
+        return '<span class="keyword">' + p1 + '</span>';
+      }
+      return match;
+    });
+
+    code = code.replace(/(#[^\n]*)/g, '<span class="comment">$1</span>');
+
+    return '<pre>' + code + '</pre>';
+  }
+</script>
+<body>
+  <div id="codeContainer">
+  <h2> 나의 첫번째 머신러닝 모델 만들기 </h2>  
+  <textarea id="pythonCode" rows="10" cols="50">
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+
+# 데이터 로드
+iris = load_iris()
+X_train, X_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.2, random_state=42)
+
+# KNN 모델 학습 및 정확도 출력
+accuracy = KNeighborsClassifier(n_neighbors=3).fit(X_train, y_train).score(X_test, y_test)
+print("Accuracy:", accuracy)
+  </textarea>
+  <div id="highlightedCode"></div>
+  </div>
+  <div id="practiceContainer" style="display: none;"></div>
+  <!-- <button onclick="goBack()">홈으로</button> -->
+  <button onclick="goNext01()">기본 미션</button>
+  <button onclick="goNext02()">레벨업 미션</button><br><br>
+  <div> * 성실한 태도, 작은 나의 땀과 노력이 모여 미래를 만듭니다. 정직, 성실 소중한 가치</div>
+</div>
+<script>
+  function goBack() {
+    window.location.href = "../01_DLSTART.html";
+  }
+
+  function goNext01() {
+    /* document.getElementById('codeContainer').style.display = 'none'; */
+    document.getElementById('practiceContainer').style.display = 'block';
+    document.getElementById('practiceContainer').innerHTML = `
+      <h3>기본 미션 문제</h3>
+      <pre id="practiceCode">
+기본 01. [기본 실습1] 'train_test_split' 함수의 'test_size' 파라미터 값을 조정하여 학습 데이터와 테스트 데이터의 비율을 변경해보세요. (코드 공유하기)
+
+기본 02. ---
+
+      </pre>
+    `;
+    document.getElementById('practiceCode').style.fontSize = '15px';
+  }
+
+  function goNext02() {
+    /* document.getElementById('codeContainer').style.display = 'none'; */
+    document.getElementById('practiceContainer').style.display = 'block';
+    document.getElementById('practiceContainer').innerHTML = `
+      <h3>레벨업 미션 문제</h3>
+      <pre id="practiceCode">
+레벨업 01. [기본 실습2]  'KNeighborsClassifier' 모델의 'n_neighbors' 파라미터 값을 변경하여 다양한 이웃 수(1-10)를 시도해보세요. 어떤 값일 때가 가장 좋은가요?(코드 공유하기)
+
+레벨업 02. 은닉층을 추가했을 때, 변경된 내용은 무엇인지 확인 후, 메모해 보자(내용 공유하기)
+
+
+      </pre>
+    `;
+    document.getElementById('practiceCode').style.fontSize = '15px';
+  }
+  function goNext03() {
+    /* document.getElementById('codeContainer').style.display = 'none'; */
+    document.getElementById('practiceContainer').style.display = 'block';
+    document.getElementById('practiceContainer').innerHTML = `
+      <h2>미션 도전 문제</h2>
+      <pre id="practiceCode">
+레벨업 01. -- (코드-댓글 남기기)
+      </pre>
+    `;
+    document.getElementById('practiceCode').style.fontSize = '15px';
+  }
+</script>
+</body>
+</html>
