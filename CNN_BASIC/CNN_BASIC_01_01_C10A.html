@@ -50,36 +50,33 @@
 </script>
 <body>
   <div id="codeContainer">
-  <h2> IRIS를 데이터 셋을 활용한 딥러닝 모델 만들기</h2>  
+  <h2> 개 고양이 데이터 셋 CNN 모델 구축하기 - 데이터 제너레이터</h2>  
   <textarea id="pythonCode" rows="10" cols="50">
-import seaborn as sns
-from keras.models import Sequential
-from keras.layers import Dense
-from sklearn.preprocessing import LabelEncoder
 
-# Iris 데이터셋 불러오기
-iris = sns.load_dataset('iris')
+import tensorflow as tf
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 
-# 데이터의 입력
-sel = ['sepal_length', 'sepal_width']
-X = iris[sel]
+# 데이터 경로
+data_path = '/content/catdog'
 
-# 데이터의 출력
-y = iris['species']
+# 데이터 불러오기
+image_size = (150, 150)  # 이미지 크기 설정
+batch_size = 32          # 미니 배치 크기 설정
 
-# 출력 데이터를 숫자로 변경
-le = LabelEncoder()
-y = le.fit_transform(y)
+# 학습 데이터에 대한 ImageDataGenerator 설정
+train_datagen = ImageDataGenerator(rescale=1./255)  # 이미지 픽셀 값을 0과 1 사이로 스케일링
+train_gen = train_datagen.flow_from_directory(
+    os.path.join(data_path, 'train'),  # 학습 데이터 경로
+    target_size=image_size,            # 입력 이미지 크기
+    batch_size=batch_size,             # 미니 배치 크기
+    class_mode='binary'                # 이진 분류 설정
+)
 
-# 모델 구성
-model = Sequential()
-model.add(Dense(10, activation='relu', input_dim=2))
-model.add(Dense(3, activation='softmax'))
+print("train_generator : ", train_gen)
+print("val_generator : ", val_gen)
 
-# 모델 컴파일 및 학습
-model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-model.fit(X, y, epochs=10, batch_size=32)
-model.evaluate(X, y)
   </textarea>
   <div id="highlightedCode"></div>
   </div>
@@ -91,7 +88,7 @@ model.evaluate(X, y)
 </div>
 <script>
   function goBack() {
-    window.location.href = "../01_DLSTART.html";
+    window.location.href = "../01_CNNSTART.html";
   }
 
   function goNext01() {
@@ -100,9 +97,14 @@ model.evaluate(X, y)
     document.getElementById('practiceContainer').innerHTML = `
       <h3>기본 미션 문제</h3>
       <pre id="practiceCode">
-기본 01. 기본 코드 실행 확인.(코드 공유하기)
+기본 01. 기본 코드 실행 확인.(코드 공유하기) - 직접 타자(각각 가산점 10점)
 
-기본 02. 피처(특징)을 우리는 'sepal_length', 'sepal_width'로 선택했다. 'petal_length'를 하나 더 추가해서 딥러닝 모델을 만들어보자.
+기본 02. 평가용 데이터 제너레이터 부분 추가하기
+
+(예제 결과)
+Epoch 5/5
+63/63 [==============================] - 86s 1s/step - loss: 0.3932 - accuracy: 0.8250 - val_loss: 0.6150 - val_accuracy: 0.7020
+
       </pre>
     `;
     document.getElementById('practiceCode').style.fontSize = '15px';
@@ -114,10 +116,7 @@ model.evaluate(X, y)
     document.getElementById('practiceContainer').innerHTML = `
       <h3>레벨업 미션 문제</h3>
       <pre id="practiceCode">
-레벨업 01. 피처(4개)를 전부 사용해서 딥러닝 모델을 만들어보자.
-
-레벨업 02. loss를 sparse_categorical_crossentropy를 사용했다. categorical_crossentropy를 loss로 사용해서 딥러닝 모델을 구축해 보자.
-
+레벨업 01. ---
       </pre>
     `;
     document.getElementById('practiceCode').style.fontSize = '15px';

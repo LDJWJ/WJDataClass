@@ -50,39 +50,40 @@
 </script>
 <body>
   <div id="codeContainer">
-  <h2> CNN 모델 확인하기 </h2>  
+  <h2> MNIST 데이터 셋 기본 DNN 모델 만들기 </h2>  
   <textarea id="pythonCode" rows="10" cols="50">
-    from keras.datasets import mnist
-    from keras.models import Sequential
-    from keras.layers import Dense, Flatten
-    from keras.utils import to_categorical
-    
-    # 데이터셋 로드
-    (X_train, y_train), (X_test, y_test) = mnist.load_data()
-    
-    # 데이터 전처리: 이미지 크기 재조정 및 정규화
-    X_train = X_train.reshape((60000, 28 * 28)) / 255.0
-    X_test = X_test.reshape((10000, 28 * 28)) / 255.0
-    
-    # 레이블을 원-핫 인코딩
-    y_train = to_categorical(y_train)
-    y_test = to_categorical(y_test)
-    
-    # 모델 구축
-    model = Sequential()
-    model.add(Dense(64, activation='relu', input_shape=(28 * 28,)))
-    model.add(Dense(10, activation='softmax'))
-    
-    # 모델 컴파일
-    model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-    
-    # 모델 학습
-    model.fit(X_train, y_train, epochs=5, batch_size=32, verbose=1)
-    
-    # 모델 평가
-    test_loss, test_accuracy = model.evaluate(X_test, y_test)
-    print("Test Loss:", test_loss)
-    print("Test Accuracy:", test_accuracy)
+
+from keras.datasets import mnist
+from keras.models import Sequential
+from keras.layers import Dense, Flatten
+from keras.utils import to_categorical
+
+# 데이터셋 로드
+(X_train, y_train), (X_test, y_test) = mnist.load_data()
+
+# 데이터 전처리: 이미지 크기 재조정 및 정규화
+X_train = X_train.reshape((60000, 28 * 28)) / 255.0
+X_test = X_test.reshape((10000, 28 * 28)) / 255.0
+
+# 레이블을 원-핫 인코딩
+y_train = to_categorical(y_train)
+y_test = to_categorical(y_test)
+
+# 모델 구축
+model = Sequential()
+model.add(Dense(64, activation='relu', input_shape=(28 * 28,)))
+model.add(Dense(10, activation='softmax'))
+
+# 모델 컴파일
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+
+# 모델 학습
+model.fit(X_train, y_train, epochs=5, batch_size=32, verbose=1)
+
+# 모델 평가
+test_loss, test_accuracy = model.evaluate(X_test, y_test)
+print("Test Loss:", test_loss)
+print("Test Accuracy:", test_accuracy)
     
   </textarea>
   <div id="highlightedCode"></div>
@@ -95,7 +96,7 @@
 </div>
 <script>
   function goBack() {
-    window.location.href = "../01_DLSTART.html";
+    window.location.href = "../01_CNNSTART.html";
   }
 
   function goNext01() {

@@ -50,19 +50,34 @@
 </script>
 <body>
   <div id="codeContainer">
-  <h2> 나의 첫번째 머신러닝 모델 만들기 </h2>  
+  <h2> 데이터 이미지 표시하기 </h2>  
   <textarea id="pythonCode" rows="10" cols="50">
-from sklearn.datasets import load_iris
-from sklearn.model_selection import train_test_split
-from sklearn.neighbors import KNeighborsClassifier
 
-# 데이터 로드
-iris = load_iris()
-X_train, X_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.2, random_state=42)
+import os
+from PIL import Image
 
-# KNN 모델 학습 및 정확도 출력
-accuracy = KNeighborsClassifier(n_neighbors=3).fit(X_train, y_train).score(X_test, y_test)
-print("Accuracy:", accuracy)
+desired_path = '/content/catdog/train/dogs'
+
+# 폴더 내 이미지 파일 경로 가져오기
+image_files = [os.path.join(desired_path, file) for file in os.listdir(desired_path) if file.endswith('.jpg')]
+
+# 상위 4개 이미지만 선택
+image_files = image_files[:4]
+
+print(image_files)
+
+# 이미지 출력
+fig, axes = plt.subplots(2, 2)
+
+for i, ax in enumerate(axes.flat):
+    if i < len(image_files):
+        image_file = image_files[i]
+        image = Image.open(image_file)
+        ax.imshow(image)
+        ax.axis('off')
+
+plt.show()
+
   </textarea>
   <div id="highlightedCode"></div>
   </div>
@@ -83,9 +98,7 @@ print("Accuracy:", accuracy)
     document.getElementById('practiceContainer').innerHTML = `
       <h3>기본 미션 문제</h3>
       <pre id="practiceCode">
-기본 01. [기본 실습1] 'train_test_split' 함수의 'test_size' 파라미터 값을 조정하여 학습 데이터와 테스트 데이터의 비율을 변경해보세요. (코드 공유하기)
-
-기본 02. ---
+기본 01. 기본 코드 실행 확인.(코드 공유하기)
 
       </pre>
     `;
@@ -98,11 +111,7 @@ print("Accuracy:", accuracy)
     document.getElementById('practiceContainer').innerHTML = `
       <h3>레벨업 미션 문제</h3>
       <pre id="practiceCode">
-레벨업 01. [기본 실습2]  'KNeighborsClassifier' 모델의 'n_neighbors' 파라미터 값을 변경하여 다양한 이웃 수(1-10)를 시도해보세요. 어떤 값일 때가 가장 좋은가요?(코드 공유하기)
-
-레벨업 02. 은닉층을 추가했을 때, 변경된 내용은 무엇인지 확인 후, 메모해 보자(내용 공유하기)
-
-
+레벨업 01. --- 
       </pre>
     `;
     document.getElementById('practiceCode').style.fontSize = '15px';
