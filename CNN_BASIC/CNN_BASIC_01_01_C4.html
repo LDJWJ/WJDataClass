@@ -50,16 +50,25 @@
 </script>
 <body>
   <div id="codeContainer">
-  <h2> 딥러닝 모델 만들기 </h2>  
+  <h2> MNIST 데이터 셋 확인하기 </h2>  
   <textarea id="pythonCode" rows="10" cols="50">
-from keras import models
-from keras.layers import Dense
+# 필요한 라이브러리 불러오기
+from keras.datasets import mnist
+import matplotlib.pyplot as plt
 
-# 모델 구성
-model = models.Sequential()
-model.add(Dense(5, activation='relu', input_shape=(10,)))
-model.add(Dense(1, activation='sigmoid'))
-model.summary()
+# 데이터셋 생성하기
+(X_train, y_train), (X_test, y_test) = mnist.load_data()
+
+# 하나의 데이터 내용 확인(학습용 입력)
+print("X_train 하나 : ", X_train[0])
+
+# 하나의 데이터 내용 확인(학습용 출력)
+print("y_train 하나 : ", y_train[0])
+
+# X_train 데이터를 이미지로 확인
+plt.imshow(X_train[0], cmap='gray')
+plt.show()
+
   </textarea>
   <div id="highlightedCode"></div>
   </div>
@@ -80,10 +89,9 @@ model.summary()
     document.getElementById('practiceContainer').innerHTML = `
       <h3>기본 미션 문제</h3>
       <pre id="practiceCode">
-기본 01. 기본 실습 해 보기.(코드 공유하기)
+기본 01. 기본 코드 실행 확인.(코드 공유하기)
 
-기본 02. 맨 마지막 출력층의 뉴런 수를 10개로 해보자. 활성화 함수도 변경.(코드 공유하기)
-
+기본 02. 첫번째는 data[0]으로 확인. 맨 마지막 데이터의 이미지를 확인해 보자.
 기본1,2 완료 후, 개인별 또는 팀별 완료 확인(discord)
       </pre>
     `;
@@ -96,9 +104,9 @@ model.summary()
     document.getElementById('practiceContainer').innerHTML = `
       <h3>레벨업 미션 문제</h3>
       <pre id="practiceCode">
-레벨업 01. 유방암을 예측하는 딥러닝 모델 만들기(코드 공유하기)
+레벨업 01. 첫번째 행에 5개의 이미지를 표시 및 확인해 보자. (Hint : plt.subplots)
 
-레벨업 02. 유방암을 예측 후, 최종 model.evaluate()평가 결과 공유(내용 공유하기)
+레벨업 02. 3행 5열의 이미지를 표시 및 확인해 보자.(코드 공유)
 
       </pre>
     `;

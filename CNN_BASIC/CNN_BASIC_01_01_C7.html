@@ -50,16 +50,49 @@
 </script>
 <body>
   <div id="codeContainer">
-  <h2> 딥러닝 모델 만들기 </h2>  
+  <h2> MNIST 데이터 셋 CNN 모델 구축하기 </h2>  
   <textarea id="pythonCode" rows="10" cols="50">
+from keras.datasets import mnist
 from keras import models
-from keras.layers import Dense
+from keras import layers
 
-# 모델 구성
+# 데이터셋 로드
+(X_train, y_train), (X_test, y_test) = mnist.load_data()
+
+# 데이터 전처리: 이미지 크기 재조정 및 정규화
+X_train = X_train.reshape((60000, 28, 28, 1)) / 255.0
+X_test = X_test.reshape((10000, 28, 28, 1)) / 255.0
+
+# CNN 모델 구축
 model = models.Sequential()
-model.add(Dense(5, activation='relu', input_shape=(10,)))
-model.add(Dense(1, activation='sigmoid'))
-model.summary()
+
+# 첫 번째 합성곱 층
+model.add(layers.Conv2D(filters=32, kernel_size=(3, 3), 
+                        activation='relu', input_shape=(28, 28, 1)))
+model.add(layers.MaxPooling2D(pool_size=(2, 2)))  # 최대 풀링
+
+# 두 번째 합성곱 층
+model.add(layers.Conv2D(filters=64, kernel_size=(3, 3), 
+                        activation='relu'))
+model.add(layers.MaxPooling2D((2, 2)))  # 최대 풀링
+
+model.add(layers.Flatten())  # 1D 텐서로 펼치기
+
+# 완전 연결층
+model.add(layers.Dense(128, activation='relu'))  # 128개의 유닛, 활성화 함수로 ReLU 사용
+model.add(layers.Dense(10, activation='softmax'))  # 출력 층, 클래스 개수에 맞는 소프트맥스 함수 사용
+
+# 모델 컴파일
+model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+
+# 모델 학습
+model.fit(X_train, y_train, epochs=5, batch_size=32, verbose=1)
+
+# 모델 평가
+test_loss, test_accuracy = model.evaluate(X_test, y_test)
+print("Test Loss:", test_loss)
+print("Test Accuracy:", test_accuracy)
+
   </textarea>
   <div id="highlightedCode"></div>
   </div>
@@ -80,11 +113,11 @@ model.summary()
     document.getElementById('practiceContainer').innerHTML = `
       <h3>기본 미션 문제</h3>
       <pre id="practiceCode">
-기본 01. 기본 실습 해 보기.(코드 공유하기)
+기본 01. 기본 코드 실행 확인.(코드 공유하기) - 직접 타자 실행 확인.(가산점 각 10점)
 
-기본 02. 맨 마지막 출력층의 뉴런 수를 10개로 해보자. 활성화 함수도 변경.(코드 공유하기)
+기본 02. 세번째 합성곱 층을 추가해 보자. 그리고 어떤 변화가 있었는지 이를 확인 후, 결과 공유하기
 
-기본1,2 완료 후, 개인별 또는 팀별 완료 확인(discord)
+기본1, 2 완료 후, 개인별 또는 팀별 완료 확인(discord)
       </pre>
     `;
     document.getElementById('practiceCode').style.fontSize = '15px';
@@ -96,10 +129,8 @@ model.summary()
     document.getElementById('practiceContainer').innerHTML = `
       <h3>레벨업 미션 문제</h3>
       <pre id="practiceCode">
-레벨업 01. 유방암을 예측하는 딥러닝 모델 만들기(코드 공유하기)
-
-레벨업 02. 유방암을 예측 후, 최종 model.evaluate()평가 결과 공유(내용 공유하기)
-
+레벨업 01. 'https://www.kaggle.com/datasets/fedesoriano/cifar10-python-in-csv'의 데이터 셋을 위한 CNN 모델을 만든다고 할 경우, 어디를 어떻게 변경하면 될까요?
+(추가 부분 코드 공유, 선착순 3팀 - 가산점 40점)
       </pre>
     `;
     document.getElementById('practiceCode').style.fontSize = '15px';
