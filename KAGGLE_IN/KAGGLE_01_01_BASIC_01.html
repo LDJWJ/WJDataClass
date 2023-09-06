@@ -54,11 +54,11 @@
   <textarea id="pythonCode" rows="10" cols="50">
 # 01 데이터 불러오기
 import numpy as np
-import pandas as pd
+import pandas as pd 
 
-train = pd.read_csv("/kaggle/input/playground-series-s3e19/train.csv")
-test = pd.read_csv("/kaggle/input/playground-series-s3e19/test.csv")
-sub = pd.read_csv("/kaggle/input/playground-series-s3e19/sample_submission.csv")
+train = pd.read_csv("train.csv")
+test = pd.read_csv("test.csv")
+sub = pd.read_csv("sample_submission.csv")
 
 train.shape, test.shape, sub.shape
 
