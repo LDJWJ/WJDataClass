@@ -50,34 +50,24 @@
 </script>
 <body>
   <div id="codeContainer">
-  <h2> 기본 코드 이해 </h2>  
+  <h2> 머신러닝 성능 개선하기 - 레이블 인코딩 기본 </h2>  
   <textarea id="pythonCode" rows="10" cols="50">
 
-### 데이터 불러오기
-```
-def load_csv(path):
-  # pandas를 이용하여 데이터를 DataFrame의 형태로 불러오기
+# 데이터 불러오기
+TRAIN_PATH = "data/train.csv"
+TEST_PATH = "data/test.csv"
+SUBMISSION_PATH = "data/sample_submission.csv"
 
-  None
-  return None   # 정상 종료
+train = load_csv(TRAIN_PATH)
+test = load_csv(TEST_PATH)
+sub = load_csv(SUBMISSION_PATH)
 
-```
-
-### 원본 main
-```
-def main_ori():
-  TRAIN_PATH = "data/train.csv"
-  TEST_PATH = "data/test.csv"
-  SUBMISSION_PATH = "data/sample_submission.csv"
-
-  train = load_csv(TRAIN_PATH)
-  test = load_csv(TEST_PATH)
-  submission = load_csv(SUBMISSION_PATH)
-
-  None
-
-  return submission
-```
+## 특성과 타켓을 분리한다.
+# 범주형 열을 숫자로 변환 (레이블 인코딩)
+print( train['cut'].unique() )
+cut_mapping = {'Fair': 1, 'Good': 2, 'Very Good': 3, 'Premium': 4, 'Ideal': 5}
+train['cut'] = train['cut'].map(cut_mapping)
+train
 
   </textarea>
   <div id="highlightedCode"></div>
@@ -99,11 +89,11 @@ def main_ori():
     document.getElementById('practiceContainer').innerHTML = `
       <h3>기본 미션 문제</h3>
       <pre id="practiceCode">
-기본 01. --(코드 공유하기)
+기본 01. --
 
-기본 02. --(코드 공유하기)
+기본 02. --
 
-기본 03. --(코드 공유하기)
+기본 03. --
       </pre>
     `;
     document.getElementById('practiceCode').style.fontSize = '15px';

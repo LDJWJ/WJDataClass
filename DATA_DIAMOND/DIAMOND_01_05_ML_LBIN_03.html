@@ -50,34 +50,80 @@
 </script>
 <body>
   <div id="codeContainer">
-  <h2> 기본 코드 이해 </h2>  
+  <h2> 모델 성능 개선 - main() 함수 완성, test데이터 셋 적용 </h2>  
   <textarea id="pythonCode" rows="10" cols="50">
 
-### 데이터 불러오기
-```
-def load_csv(path):
-  # pandas를 이용하여 데이터를 DataFrame의 형태로 불러오기
+def main():
 
-  None
-  return None   # 정상 종료
+  import sklearn
+  from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
+  from sklearn.model_selection import train_test_split  # 데이터 나누기
 
-```
-
-### 원본 main
-```
-def main_ori():
   TRAIN_PATH = "data/train.csv"
   TEST_PATH = "data/test.csv"
   SUBMISSION_PATH = "data/sample_submission.csv"
 
+  # 데이터 불러오기 완성 OK
   train = load_csv(TRAIN_PATH)
   test = load_csv(TEST_PATH)
   submission = load_csv(SUBMISSION_PATH)
 
-  None
+  #  None  -
+  # 데이터 불러오기 -> 데이터 나누기 -> 데이터 평가 및 검증 -> 최종 모델로 예측 -> 제출
+  # 데이터 불러오기 완성 OK
+  ## 특성과 타켓을 분리한다.
+  # 특성과 타겟 분리
+
+  ## 특성과 타켓을 분리한다.
+  # 범주형 열을 숫자로 변환 (레이블 인코딩)
+  cut_mapping = {'Fair': 1, 'Good': 2, 'Very Good': 3, 'Premium': 4, 'Ideal': 5}
+  train['cut'] = train['cut'].map(cut_mapping)
+  test['cut'] = test['cut'].map(cut_mapping)
+
+  # 범주형 열을 숫자로 변환 (레이블 인코딩)
+  color_mapping = {'D':1, 'E': 2, 'F': 3, 'G': 4, 'H': 5, 'I': 6, 'J':7}
+  train['color'] = train['color'].map(color_mapping)
+  test['color'] = test['color'].map(color_mapping)
+
+  # 범주형 열을 숫자로 변환 (레이블 인코딩)
+  # I1 (최악), SI2, SI1, VS2, VS1, VVS2, VVS1, IF
+  clarity_mapping = {'I1':1, 'SI2':2, 'SI1':3, 'VS2':4, 'VS1':5, 'VVS2':6,'VVS1':7,  'IF':8  }
+  train['clarity'] = train['clarity'].map(clarity_mapping)
+  test['clarity'] = test['clarity'].map(clarity_mapping)
+
+  # 특성과 타겟 분리
+  X = train.drop('price', axis=1)
+  X_sel = X[ ["carat", "cut", "depth", "color", "clarity", "table", "x", "y", "z" ] ]
+  y = train['price']
+
+  # 학습 데이터와 검증 데이터로 분할
+  X_train, X_val, y_train, y_val = train_test_split(X_sel, y, test_size=0.2, random_state=42)
+
+  # 랜덤 포레스트 모델 생성
+  rf_model = RandomForestRegressor(n_estimators=100, random_state=42)
+
+  # 모델 훈련
+  rf_model.fit(X_train, y_train)
+
+  # 검증 데이터에 모델 적용
+  y_pred = rf_model.predict(X_val)
+
+  # MAPE(Mean Absolute Percentage Error) 계산
+  def calculate_mape(y_true, y_pred):
+      return 100 * (abs((y_true - y_pred) / y_true)).mean()
+
+  mape = calculate_mape(y_val, y_pred)
+  print(f"MAPE: {mape:.2f}%")
+
+  # 최종 모델 생성 및 제출
+  X_last = test[ ["carat", "cut", "depth", "color",  "clarity", "table", "x", "y", "z"] ]
+  y_last = rf_model.predict(X_last)
+  submission['price'] = y_last
 
   return submission
-```
+
+# main() 함수 
+main()
 
   </textarea>
   <div id="highlightedCode"></div>
@@ -99,11 +145,11 @@ def main_ori():
     document.getElementById('practiceContainer').innerHTML = `
       <h3>기본 미션 문제</h3>
       <pre id="practiceCode">
-기본 01. --(코드 공유하기)
+기본 01. --
 
-기본 02. --(코드 공유하기)
+기본 02. --
 
-기본 03. --(코드 공유하기)
+기본 03. --
       </pre>
     `;
     document.getElementById('practiceCode').style.fontSize = '15px';

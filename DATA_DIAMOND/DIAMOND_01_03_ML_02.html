@@ -50,34 +50,36 @@
 </script>
 <body>
   <div id="codeContainer">
-  <h2> 기본 코드 이해 </h2>  
+  <h2> 모델 학습 및 평가(MAPE) </h2>  
   <textarea id="pythonCode" rows="10" cols="50">
 
-### 데이터 불러오기
-```
-def load_csv(path):
-  # pandas를 이용하여 데이터를 DataFrame의 형태로 불러오기
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.model_selection import train_test_split
 
-  None
-  return None   # 정상 종료
+## 특성과 타켓을 분리한다.
+# 특성과 타겟 분리
+X = train.drop('price', axis=1)
+X_sel = X[ ["carat", "depth", "table", "x", "y", "z" ] ]
+y = train['price']
 
-```
+# 학습 데이터와 검증 데이터로 분할
+X_train, X_val, y_train, y_val = train_test_split(X_sel, y, test_size=0.2, random_state=42)
 
-### 원본 main
-```
-def main_ori():
-  TRAIN_PATH = "data/train.csv"
-  TEST_PATH = "data/test.csv"
-  SUBMISSION_PATH = "data/sample_submission.csv"
+# KNN 모델 생성
+knn_model = KNeighborsRegressor(n_neighbors=5)
 
-  train = load_csv(TRAIN_PATH)
-  test = load_csv(TEST_PATH)
-  submission = load_csv(SUBMISSION_PATH)
+# 모델 훈련
+knn_model.fit(X_train, y_train)
 
-  None
+# 모델 예측
+y_pred = knn_model.predict(X_val)
 
-  return submission
-```
+# MAPE(Mean Absolute Percentage Error) 계산
+def calculate_mape(y_true, y_pred):
+    return 100 * (abs((y_true - y_pred) / y_true)).mean()
+
+mape = calculate_mape(y_val, y_pred)
+print(f"MAPE: {mape:.2f}%")
 
   </textarea>
   <div id="highlightedCode"></div>
@@ -99,11 +101,11 @@ def main_ori():
     document.getElementById('practiceContainer').innerHTML = `
       <h3>기본 미션 문제</h3>
       <pre id="practiceCode">
-기본 01. --(코드 공유하기)
+기본 01. --
 
-기본 02. --(코드 공유하기)
+기본 02. --
 
-기본 03. --(코드 공유하기)
+기본 03. --
       </pre>
     `;
     document.getElementById('practiceCode').style.fontSize = '15px';
