@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> 실전 데이터 분석 - 다이아몬드 데이터 셋 </title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    .title {
+      font-size: 36px;
+      font-weight: bold;
+      text-align: center;
+      color: #007bff; /* 새로운 색상 값으로 변경 */
+      margin-top: 50px;
+      margin-bottom: 30px;
+    }
+
+    .btn_group_01 .btn_start {
+      margin-right: 10px;
+    }
+
+    .btn-group .btn {
+      margin-right: 10px;
+    }
+
+    .table {
+      border-collapse: separate;
+      border-spacing: 0;
+      width: 100%;
+    }
+
+    .table thead th {
+      background-color: #343a40;
+      color: #fff;
+    }
+
+    .table tbody td {
+      border-top: 1px solid #dee2e6;
+    }
+
+    /* Added styles for row colors */
+    .table tbody tr:nth-child(odd) {
+      background-color: #f8f9fa;
+    }
+
+    .table tbody tr:nth-child(even) {
+      background-color: #e9ecef;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: start; /* 왼쪽 정렬로 변경 */
+      align-items: center;
+      flex-wrap: wrap; /* 필요에 따라 버튼들을 여러 줄에 걸쳐 표시 */
+    }
+
+    .btn-group .btn {
+      border-radius: 0;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      margin: 5px;
+    }
+
+    .btn_group_01 .btn_start {
+      border-radius: 0;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      margin: 5px;
+    }
+
+    .btn-group .btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1 class="title"> 다이아몬드 데이터 셋 실전 분석 </h1>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th>구분</th>
+          <th>수업코드</th>
+          <th>내용</th>
+          <th>미션</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr>
+          <td> 실전 캐글 대회 참여 </td>
+          <td> DATA_ANALYSIS_DIAMOND_01 </td>
+          <td> 수업 준비 </td>
+          <td>
+              <a href="https://colab.research.google.com/?hl=ko" class="btn btn-primary" target="_blank"> 
+                개발 도구 - 구글 코랩 띄우기 </a><br>
+              <div style="margin-bottom: 10px;"></div> <!-- 공백을 추가하기 위한 div 요소 -->
+              <a href="https://www.kaggle.com/datasets/shivam2503/diamonds" class="btn btn-primary" target="_blank"> 
+                데이터 셋 이해 </a><br>
+          </td>
+        </tr>
+
+        <tr>
+          <td> 다이아몬드 데이터 실전 분석 </td>
+          <td> DATA_ANALYSIS_DIAMOND_02 </td>
+          <td> 기본 다지기 </td>
+          <td>
+            <a href="./DATA_DIAMOND/DIAMOND_01_01_BASIC_01.html" class="btn btn-primary" target="_blank"> 
+              실전 데이터 준비 </a><br>
+            <div style="margin-bottom: 10px;"></div> <!-- 공백을 추가하기 위한 div 요소 -->
+            <a href="./DATA_DIAMOND/DIAMOND_01_01_BASIC_02.html" class="btn btn-primary" target="_blank"> 
+              주어진 기본 코드 이해 </a><br>
+            <div style="margin-bottom: 10px;"></div> <!-- 공백을 추가하기 위한 div 요소 -->
+            <a href="./DATA_DIAMOND/DIAMOND_01_01_BASIC_03.html" class="btn btn-primary" target="_blank"> 
+              데이터 불러오기 및 데이터 이해 </a><br>
+            <div style="margin-bottom: 10px;"></div> <!-- 공백을 추가하기 위한 div 요소 -->
+            <a href="./DATA_DIAMOND/KAGGLE_01_01_BASIC_04_lgbm.html" class="btn btn-primary" target="_blank"> lgbm 기본 모델 만들기 </a><br>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

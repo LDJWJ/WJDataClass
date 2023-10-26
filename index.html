@@ -18,6 +18,7 @@
         #myweb {
             background-color: #343a40;
             color: #ffffff;
+            margin-bottom: 20px;
             padding: 50px;
             text-align: center;
         }
@@ -39,7 +40,7 @@
             border: none;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
-            height: 450px /* 카드의 세로 높이를 400px로 고정 */
+            height: 400px /* 카드의 세로 높이를 400px로 고정 */
         }
 
         .card:hover {
@@ -47,7 +48,7 @@
         }
 
         .card-img-top {
-            height: 200px;
+            height: 150px;
             object-fit: cover;
         }
 
@@ -58,8 +59,8 @@
         }
 
         .card-subtitle {
-            font-size: 16px;
-            color: #666;
+            font-size: 15px;
+            color: #777;
             margin-top: 5px;
         }
 
@@ -86,6 +87,21 @@
     </section>
     <div class="container">
         <div class="row">
+            <div class="col-md-4 col-sm-6">
+                <div class="card">
+                    <a href="https://ldjwj.github.io/WJDataClass/01_DATA_DIAMOND.html" target="_blank">
+                        <img src="https://source.unsplash.com/1600x900/?diamond,data" class="card-img-top" alt="Card Image">
+                    </a>
+                    <div class="card-body d-flex flex-column">  <!-- 내부 요소를 수직으로 정렬  d-flex flex-column -->  
+                        <h5 class="card-title"> 실전 데이터 분석 - 다이아몬드 데이터 셋 </h5>
+                        <h6 class="card-subtitle mb-2"> 다이아몬드 데이터 셋의 기본 모델부터 평가 성능 최적화 </h6>
+                        <p class="card-text"> 데이터 이해 및 전처리, 앙상블 모델 만들기, MAPE이해, 데이터 성능 개선 </p>
+                        <div class="mt-auto"> <!-- mt-auto 클래스는 margin-top을 자동으로 조정하여 요소를 하단으로 밀어냄. -->  
+                            <a href="https://ldjwj.github.io/WJDataClass/01_DATA_DIAMOND.html" class="card-link" target="_blank">이동</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-4 col-sm-6">
                 <div class="card">
                     <a href="https://ldjwj.github.io/WJDataClass/01_PANDAS_START.html" target="_blank">

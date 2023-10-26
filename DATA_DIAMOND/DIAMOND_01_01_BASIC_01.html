@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> 다이아몬드 데이터 셋 실전 분석 </title>
+  <style>
+    .keyword {
+      color: blue;
+      font-weight: bold;
+    }
+    .comment {
+      color: green;
+      font-style: italic;
+      font-family: 'D2Coding', monospace;
+    }
+    pre {
+      font-family: 'D2Coding', monospace;
+    }
+  </style>
+</head>
+<script>
+  window.addEventListener('DOMContentLoaded', function() {
+    highlightCode();
+  });
+
+  function highlightCode() {
+    var pythonCode = document.getElementById('pythonCode').value;
+    var highlightedCode = highlightPythonCode(pythonCode);
+    document.getElementById('highlightedCode').innerHTML = highlightedCode;
+
+    // pythonCode 영역 숨기기
+    document.getElementById('pythonCode').style.display = 'none';
+  }
+
+  function highlightPythonCode(code) {
+    code = code.replace(/</g, '&lt;').replace(/>/g, '&gt;'); // Escape HTML tags
+
+    var keywords = ['and', 'as', 'assert', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield'];
+
+    code = code.replace(/([A-Za-z_]\w*)/g, function(match, p1) {
+      if (keywords.includes(p1)) {
+        return '<span class="keyword">' + p1 + '</span>';
+      }
+      return match;
+    });
+
+    code = code.replace(/(#[^\n]*)/g, '<span class="comment">$1</span>');
+
+    return '<pre>' + code + '</pre>';
+  }
+</script>
+<body>
+  <div id="codeContainer">
+  <h2> 데이터 셋 만들기 </h2>  
+  <textarea id="pythonCode" rows="10" cols="50">
+# 사전 데이터 셋을 만들기 전에 data 폴더를 만들어준다.
+# 01. 라이브러리 불러오기
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import sys
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+
+# 02. 데이터 불러오기 
+dat = sns.load_dataset("diamonds")
+dat
+
+# 03. 데이터 만들기
+# 데이터를 학습 데이터와 테스트 데이터로 분할합니다.
+train_data, test_data = train_test_split(dat, test_size=0.2, random_state=42)
+
+# train.csv 파일에 학습 데이터를 저장합니다.
+train_data.to_csv('data/train.csv', index=False)
+
+# test.csv 파일에 테스트 데이터를 저장하되 "price" 열을 제거합니다.
+test_data.drop('price', axis=1, inplace=True)
+test_data.to_csv('data/test.csv', index=False)
+
+# sample_submission.csv 파일을 생성합니다.
+sample_submission = pd.DataFrame({'price': [0] * len(test_data)})
+sample_submission.to_csv('data/sample_submission.csv', index=False)
+
+
+# 04 정보 확인 - 컬럼명 확인
+print(train_data.columns)
+print(test_data.columns)
+print(sample_submission.columns)
+
+# 05 정보 확인 - 데이터 5행 확인
+train_data.head()
+test_data.head()
+sample_submission.head()
+
+  </textarea>
+  <div id="highlightedCode"></div>
+  </div>
+  <div id="practiceContainer" style="display: none;"></div>
+  <!-- <button onclick="goBack()">홈으로</button> -->
+  <button onclick="goNext01()">기본 미션</button>
+  <button onclick="goNext02()">레벨업 미션</button><br><br>
+  <div> * 성실한 태도, 작은 나의 땀과 노력이 모여 미래를 만듭니다. 정직, 성실 소중한 가치</div>
+</div>
+<script>
+  function goBack() {
+    window.location.href = "../01_DLSTART.html";
+  }
+
+  function goNext01() {
+    /* document.getElementById('codeContainer').style.display = 'none'; */
+    document.getElementById('practiceContainer').style.display = 'block';
+    document.getElementById('practiceContainer').innerHTML = `
+      <h3>기본 미션 문제</h3>
+      <pre id="practiceCode">
+기본 01. --(코드 공유하기)
+
+기본 02. --(코드 공유하기)
+
+기본 03. --(코드 공유하기)
+      </pre>
+    `;
+    document.getElementById('practiceCode').style.fontSize = '15px';
+  }
+
+  function goNext02() {
+    /* document.getElementById('codeContainer').style.display = 'none'; */
+    document.getElementById('practiceContainer').style.display = 'block';
+    document.getElementById('practiceContainer').innerHTML = `
+      <h3>레벨업 미션 문제</h3>
+      <pre id="practiceCode">
+레벨업 01. --(코드 공유하기)
+
+레벨업 02. --(내용 공유하기)
+
+
+      </pre>
+    `;
+    document.getElementById('practiceCode').style.fontSize = '15px';
+  }
+  function goNext03() {
+    /* document.getElementById('codeContainer').style.display = 'none'; */
+    document.getElementById('practiceContainer').style.display = 'block';
+    document.getElementById('practiceContainer').innerHTML = `
+      <h2>미션 도전 문제</h2>
+      <pre id="practiceCode">
+레벨업 01. -- (코드-댓글 남기기)
+      </pre>
+    `;
+    document.getElementById('practiceCode').style.fontSize = '15px';
+  }
+</script>
+</body>
+</html>

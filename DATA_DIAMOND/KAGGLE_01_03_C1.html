@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Python 코드</title>
+  <style>
+    .keyword {
+      color: blue;
+      font-weight: bold;
+    }
+    .comment {
+      color: green;
+      font-style: italic;
+      font-family: 'D2Coding', monospace;
+    }
+    pre {
+      font-family: 'D2Coding', monospace;
+    }
+  </style>
+</head>
+<script>
+  window.addEventListener('DOMContentLoaded', function() {
+    highlightCode();
+  });
+
+  function highlightCode() {
+    var pythonCode = document.getElementById('pythonCode').value;
+    var highlightedCode = highlightPythonCode(pythonCode);
+    document.getElementById('highlightedCode').innerHTML = highlightedCode;
+
+    // pythonCode 영역 숨기기
+    document.getElementById('pythonCode').style.display = 'none';
+  }
+
+  function highlightPythonCode(code) {
+    code = code.replace(/</g, '&lt;').replace(/>/g, '&gt;'); // Escape HTML tags
+
+    var keywords = ['and', 'as', 'assert', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield'];
+
+    code = code.replace(/([A-Za-z_]\w*)/g, function(match, p1) {
+      if (keywords.includes(p1)) {
+        return '<span class="keyword">' + p1 + '</span>';
+      }
+      return match;
+    });
+
+    code = code.replace(/(#[^\n]*)/g, '<span class="comment">$1</span>');
+
+    return '<pre>' + code + '</pre>';
+  }
+</script>
+<body>
+  <div id="codeContainer">
+  <h2> LightGBM - 그래디언트 부스팅 알고리즘 </h2>  
+  <textarea id="pythonCode" rows="10" cols="50">
+# 01 데이터 불러오기
+import numpy as np
+import pandas as pd 
+
+train = pd.read_csv("/kaggle/input/playground-series-s3e19/train.csv")
+test = pd.read_csv("/kaggle/input/playground-series-s3e19/test.csv")
+sub = pd.read_csv("/kaggle/input/playground-series-s3e19/sample_submission.csv")
+
+train.shape, test.shape, sub.shape
+
+# 02 데이터 확인
+train.head(3)
+test.head(3)
+
+print( train['country'].unique() )
+print( test['country'].unique() )
+
+print( train['store'].unique() )
+print( test['store'].unique() )
+
+print( train['product'].unique() )
+print( test['product'].unique() )
+
+# 03 데이터 셋 복사하기
+train_n = train.copy()
+test_n = test.copy()
+
+# 04 데이터 숫자로 변환(LableEncoding)
+from tqdm.notebook import tqdm
+from sklearn.preprocessing import LabelEncoder
+
+for col in tqdm(['country', 'store', 'product']):
+    train_n[col] = LabelEncoder().fit_transform(train_n[[col]]) + 1
+    train_n[col] = train_n[col].astype(np.int8)
+
+for col in tqdm(['country', 'store', 'product']):
+    test_n[col] = LabelEncoder().fit_transform(test_n[[col]]) + 1;
+    test_n[col] = test_n[col].astype(np.int8);
+
+train_n.head()
+test_n.head()
+
+# 05 LightGBM 모델 생성/학습/예측
+from lightgbm import LGBMRegressor
+from sklearn.model_selection import train_test_split
+
+# 학습을 위한 입력(X), 출력(y) 지정
+sel = ['country', 'store', 'product']
+X = train_n[sel]
+y = train_n[['num_sold']]
+
+X_last = test_n[ sel ]
+
+# 학습용, 평가용으로 데이터 나누기
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=False)
+
+# 모델 초기화
+lgbm_model = LGBMRegressor()
+
+# 모델 학습
+lgbm_model.fit(X_train, y_train)
+
+# 테스트 데이터에 대한 예측 수행
+y_pred = lgbm_model.predict(X_test)
+
+# 예측 결과 확인
+print(y_pred)
+
+# 06 예측된 결과 자체 평가
+# SMAPE 정의
+def smape(y_true, y_pred):
+    return 100/len(y_true) * np.sum(2 * np.abs(y_pred - y_true) / (np.abs(y_true) + np.abs(y_pred)))
+
+# 테스트 데이터에 대한 예측 수행
+y_pred = lgbm_model.predict(X_test)
+
+# y_test와 y_pred를 numpy array로 변환
+y_test_array = np.array(y_test)
+y_pred_array = np.array(y_pred)
+
+# SMAPE 계산
+smape_value = smape(y_test_array, y_pred_array)
+
+print("SMAPE: ", smape_value)
+
+# 07 최종 예측 및 제출 
+# 테스트 데이터에 대한 예측 수행
+y_pred = lgbm_model.predict(X_last)
+
+sub['num_sold'] = y_pred
+sub[0:10]
+
+sub.to_csv("01_baseline_model.csv", index=False)
+
+  </textarea>
+  <div id="highlightedCode"></div>
+  </div>
+  <div id="practiceContainer" style="display: none;"></div>
+  <!-- <button onclick="goBack()">홈으로</button> -->
+  <button onclick="goNext01()">기본 미션</button>
+  <button onclick="goNext02()">레벨업 미션</button><br><br>
+  <div> * 성실한 태도, 작은 나의 땀과 노력이 모여 미래를 만듭니다. 정직, 성실 소중한 가치</div>
+</div>
+<script>
+  function goBack() {
+    window.location.href = "../01_DLSTART.html";
+  }
+
+  function goNext01() {
+    /* document.getElementById('codeContainer').style.display = 'none'; */
+    document.getElementById('practiceContainer').style.display = 'block';
+    document.getElementById('practiceContainer').innerHTML = `
+      <h3>기본 미션 문제</h3>
+      <pre id="practiceCode">
+기본 01. 아래 부분과 같이 변경한 이후에 SMAPE 값을 확인해 보기.(코드 공유하기)
+lgbm_model = LGBMRegressor(num_leaves=100, n_estimators=500)
+
+기본 02. 기타 다양한 파라미터를 변경하면서 SMAPE의 값을 확인해 보기.(코드 공유하기)
+lgbm_model = LGBMRegressor(num_leaves=100, n_estimators=500)
+
+num_leaves: 트리의 최대 리프 노드 개수를 지정
+learning_rate: 각 트리의 기여도를 조절하는 값
+n_estimators: 사용할 트리의 개수를 지정
+max_depth: 각 트리의 최대 깊이를 제한
+min_child_samples: 리프 노드가 되기 위한 최소한의 샘플 수를 지정
+reg_alpha와 reg_lambda: L1(Lasso) 및 L2(Ridge) 정규화 항에 대한 가중치를 조절
+subsample: 각 트리를 구성하는 데 사용되는 샘플의 비율을 조정
+
+기본 03. --(코드 공유하기)
+      </pre>
+    `;
+    document.getElementById('practiceCode').style.fontSize = '15px';
+  }
+
+  function goNext02() {
+    /* document.getElementById('codeContainer').style.display = 'none'; */
+    document.getElementById('practiceContainer').style.display = 'block';
+    document.getElementById('practiceContainer').innerHTML = `
+      <h3>레벨업 미션 문제</h3>
+      <pre id="practiceCode">
+레벨업 01. 날짜 데이터를 년, 월, 일의 컬럼 등을 만들어 이를 포함시켜서 성능을 개선시켜보기(코드 공유하기)
+
+레벨업 02. --(내용 공유하기)
+
+
+      </pre>
+    `;
+    document.getElementById('practiceCode').style.fontSize = '15px';
+  }
+  function goNext03() {
+    /* document.getElementById('codeContainer').style.display = 'none'; */
+    document.getElementById('practiceContainer').style.display = 'block';
+    document.getElementById('practiceContainer').innerHTML = `
+      <h2>미션 도전 문제</h2>
+      <pre id="practiceCode">
+레벨업 01. -- (코드-댓글 남기기)
+      </pre>
+    `;
+    document.getElementById('practiceCode').style.fontSize = '15px';
+  }
+</script>
+</body>
+</html>
