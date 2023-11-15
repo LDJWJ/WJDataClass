@@ -50,7 +50,7 @@
 </script>
 <body>
   <div id="codeContainer">
-  <h2> 머신러닝 성능 개선하기 - 레이블 인코딩 기본 </h2>  
+  <h2> 머신러닝 모델 구축 - LGBM </h2>  
   <textarea id="pythonCode" rows="10" cols="50">
 
 # 데이터 불러오기
@@ -62,12 +62,59 @@ train = load_csv(TRAIN_PATH)
 test = load_csv(TEST_PATH)
 sub = load_csv(SUBMISSION_PATH)
 
+from lightgbm import LGBMRegressor
+from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
+from sklearn.model_selection import train_test_split
+
 ## 특성과 타켓을 분리한다.
 # 범주형 열을 숫자로 변환 (레이블 인코딩)
-print( train['cut'].unique() )
 cut_mapping = {'Fair': 1, 'Good': 2, 'Very Good': 3, 'Premium': 4, 'Ideal': 5}
 train['cut'] = train['cut'].map(cut_mapping)
-train
+test['cut'] = test['cut'].map(cut_mapping)
+
+# 범주형 열을 숫자로 변환 (레이블 인코딩)
+color_mapping = {'D':1, 'E': 2, 'F': 3, 'G': 4, 'H': 5, 'I': 6, 'J':7}
+train['color'] = train['color'].map(color_mapping)
+test['color'] = test['color'].map(color_mapping)
+
+# 범주형 열을 숫자로 변환 (레이블 인코딩)
+# I1 (최악), SI2, SI1, VS2, VS1, VVS2, VVS1, IF
+clarity_mapping = {'I1':1, 'SI2':2, 'SI1':3, 'VS2':4, 'VS1':5, 'VVS2':6,'VVS1':7,  'IF':8  }
+train['clarity'] = train['clarity'].map(clarity_mapping)
+test['clarity'] = test['clarity'].map(clarity_mapping)
+
+# 특성과 타겟 분리
+X = train.drop('price', axis=1)
+X_sel = X[ ["carat", "cut", "depth", "color", "clarity", "table", "x", "y", "z" ] ]
+y = train['price']
+
+# 학습 데이터와 검증 데이터로 분할
+X_train, X_val, y_train, y_val = train_test_split(X_sel, y, test_size=0.2, random_state=42)
+
+# 모델 선택
+model_lgbm = LGBMRegressor(n_estimators=1000, early_stopping_rounds=100, eval_metric='mae', verbose=1)
+
+# Lgbm은 중간에 조기 중단이 가능.
+evals = [(X_val, y_val)]
+
+# 모델 학습
+# 모델 학습
+model_lgbm.fit(X_train, y_train, eval_set=evals)
+
+# 모델을 활용한 예측
+preds = model_lgbm.predict(X_val)
+
+# MAPE(Mean Absolute Percentage Error) 계산
+def calculate_mape(y_true, y_pred):
+    return 100 * (abs((y_true - y_pred) / y_true)).mean()
+
+mape = calculate_mape(y_val, preds)
+print(f"MAPE: {mape:.2f}%")
+
+# 최종 모델 생성 및 제출
+X_last = test[ ["carat", "cut", "depth", "color","clarity", "table", "x", "y", "z" ] ]
+y_last = model_lgbm.predict(X_last)
+submission['price'] = y_last
 
   </textarea>
   <div id="highlightedCode"></div>
