@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Python 코드</title>
+  <style>
+    .keyword {
+      color: blue;
+      font-weight: bold;
+    }
+    .comment {
+      color: green;
+      font-style: italic;
+      font-family: 'D2Coding', monospace;
+    }
+    pre {
+      font-family: 'D2Coding', monospace;
+    }
+  </style>
+</head>
+<script>
+  window.addEventListener('DOMContentLoaded', function() {
+    highlightCode();
+  });
+
+  function highlightCode() {
+    var pythonCode = document.getElementById('pythonCode').value;
+    var highlightedCode = highlightPythonCode(pythonCode);
+    document.getElementById('highlightedCode').innerHTML = highlightedCode;
+
+    // pythonCode 영역 숨기기
+    document.getElementById('pythonCode').style.display = 'none';
+  }
+
+  function highlightPythonCode(code) {
+    code = code.replace(/</g, '&lt;').replace(/>/g, '&gt;'); // Escape HTML tags
+
+    var keywords = ['and', 'as', 'assert', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield'];
+
+    code = code.replace(/([A-Za-z_]\w*)/g, function(match, p1) {
+      if (keywords.includes(p1)) {
+        return '<span class="keyword">' + p1 + '</span>';
+      }
+      return match;
+    });
+
+    code = code.replace(/(#[^\n]*)/g, '<span class="comment">$1</span>');
+
+    return '<pre>' + code + '</pre>';
+  }
+</script>
+<body>
+  <div id="codeContainer">
+  <h2> MNIST 데이터 셋 CNN 모델 구축하기 </h2>  
+  <textarea id="pythonCode" rows="10" cols="50">
+
+import tensorflow as tf
+import os
+import shutil
+
+dat_URL = 'https://storage.googleapis.com/mledu-datasets/cats_and_dogs_filtered.zip'
+
+# 다운로드 및 압축 해제된 폴더 경로 설정
+path_to_zip = tf.keras.utils.get_file('cats_and_dogs_filtered.zip', origin=dat_URL, extract=True)
+exp_folder_path = os.path.join(os.path.dirname(path_to_zip), 'cats_and_dogs_filtered')
+
+# 원하는 위치로 이동시킬 폴더 경로 설정
+desired_path = '/content/catdog'
+
+# 대상 경로에 폴더가 이미 존재하는지 확인하고 삭제
+if os.path.exists(desired_path):
+    shutil.rmtree(desired_path)  # 폴더 삭제
+
+# 폴더 이동
+shutil.move(exp_folder_path, desired_path)
+
+# 이동된 폴더 경로 출력
+print(desired_path)
+
+PATH = os.path.join(os.path.dirname(desired_path), "catdog")
+print(PATH)
+
+  </textarea>
+  <div id="highlightedCode"></div>
+  </div>
+  <div id="practiceContainer" style="display: none;"></div>
+  <!-- <button onclick="goBack()">홈으로</button> -->
+  <button onclick="goNext01()">기본 미션</button>
+  <button onclick="goNext02()">레벨업 미션</button><br><br>
+  <div> * 성실한 태도, 작은 나의 땀과 노력이 모여 미래를 만듭니다. 정직, 성실 소중한 가치</div>
+</div>
+<script>
+  function goBack() {
+    window.location.href = "../01_CNNSTART.html";
+  }
+
+  function goNext01() {
+    /* document.getElementById('codeContainer').style.display = 'none'; */
+    document.getElementById('practiceContainer').style.display = 'block';
+    document.getElementById('practiceContainer').innerHTML = `
+      <h3>기본 미션 문제</h3>
+      <pre id="practiceCode">
+기본 01. 기본 코드 실행 확인.(코드 공유하기)
+
+      </pre>
+    `;
+    document.getElementById('practiceCode').style.fontSize = '15px';
+  }
+
+  function goNext02() {
+    /* document.getElementById('codeContainer').style.display = 'none'; */
+    document.getElementById('practiceContainer').style.display = 'block';
+    document.getElementById('practiceContainer').innerHTML = `
+      <h3>레벨업 미션 문제</h3>
+      <pre id="practiceCode">
+레벨업 01. ---
+      </pre>
+    `;
+    document.getElementById('practiceCode').style.fontSize = '15px';
+  }
+  function goNext03() {
+    /* document.getElementById('codeContainer').style.display = 'none'; */
+    document.getElementById('practiceContainer').style.display = 'block';
+    document.getElementById('practiceContainer').innerHTML = `
+      <h2>미션 도전 문제</h2>
+      <pre id="practiceCode">
+레벨업 01. -- (코드-댓글 남기기)
+      </pre>
+    `;
+    document.getElementById('practiceCode').style.fontSize = '15px';
+  }
+</script>
+</body>
+</html>

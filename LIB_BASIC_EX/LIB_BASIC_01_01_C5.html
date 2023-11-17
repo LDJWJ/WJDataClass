@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Python 코드</title>
+  <style>
+    .keyword {
+      color: blue;
+      font-weight: bold;
+    }
+    .comment {
+      color: green;
+      font-style: italic;
+      font-family: 'D2Coding', monospace;
+    }
+    pre {
+      font-family: 'D2Coding', monospace;
+    }
+  </style>
+</head>
+<script>
+  window.addEventListener('DOMContentLoaded', function() {
+    highlightCode();
+  });
+
+  function highlightCode() {
+    var pythonCode = document.getElementById('pythonCode').value;
+    var highlightedCode = highlightPythonCode(pythonCode);
+    document.getElementById('highlightedCode').innerHTML = highlightedCode;
+
+    // pythonCode 영역 숨기기
+    document.getElementById('pythonCode').style.display = 'none';
+  }
+
+  function highlightPythonCode(code) {
+    code = code.replace(/</g, '&lt;').replace(/>/g, '&gt;'); // Escape HTML tags
+
+    var keywords = ['and', 'as', 'assert', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield'];
+
+    code = code.replace(/([A-Za-z_]\w*)/g, function(match, p1) {
+      if (keywords.includes(p1)) {
+        return '<span class="keyword">' + p1 + '</span>';
+      }
+      return match;
+    });
+
+    code = code.replace(/(#[^\n]*)/g, '<span class="comment">$1</span>');
+
+    return '<pre>' + code + '</pre>';
+  }
+</script>
+<body>
+  <div id="codeContainer">
+  <h2> MNIST 데이터 셋 기본 DNN 모델 만들기 </h2>  
+  <textarea id="pythonCode" rows="10" cols="50">
+
+from keras.datasets import mnist
+from keras.models import Sequential
+from keras.layers import Dense, Flatten
+from keras.utils import to_categorical
+
+# 데이터셋 로드
+(X_train, y_train), (X_test, y_test) = mnist.load_data()
+
+# 데이터 전처리: 이미지 크기 재조정 및 정규화
+X_train = X_train.reshape((60000, 28 * 28)) / 255.0
+X_test = X_test.reshape((10000, 28 * 28)) / 255.0
+
+# 레이블을 원-핫 인코딩
+y_train = to_categorical(y_train)
+y_test = to_categorical(y_test)
+
+# 모델 구축
+model = Sequential()
+model.add(Dense(64, activation='relu', input_shape=(28 * 28,)))
+model.add(Dense(10, activation='softmax'))
+
+# 모델 컴파일
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+
+# 모델 학습
+model.fit(X_train, y_train, epochs=5, batch_size=32, verbose=1)
+
+# 모델 평가
+test_loss, test_accuracy = model.evaluate(X_test, y_test)
+print("Test Loss:", test_loss)
+print("Test Accuracy:", test_accuracy)
+    
+  </textarea>
+  <div id="highlightedCode"></div>
+  </div>
+  <div id="practiceContainer" style="display: none;"></div>
+  <!-- <button onclick="goBack()">홈으로</button> -->
+  <button onclick="goNext01()">기본 미션</button>
+  <button onclick="goNext02()">레벨업 미션</button><br><br>
+  <div> * 성실한 태도, 작은 나의 땀과 노력이 모여 미래를 만듭니다. 정직, 성실 소중한 가치</div>
+</div>
+<script>
+  function goBack() {
+    window.location.href = "../01_CNNSTART.html";
+  }
+
+  function goNext01() {
+    /* document.getElementById('codeContainer').style.display = 'none'; */
+    document.getElementById('practiceContainer').style.display = 'block';
+    document.getElementById('practiceContainer').innerHTML = `
+      <h3>기본 미션 문제</h3>
+      <pre id="practiceCode">
+기본 01. 기본 코드 실행 확인.(코드 공유하기)
+
+기본 02. 직접 손으로 타자(가산점 : 10점)
+
+기본1,2 완료 후, 개인별 또는 팀별 확인(discord)
+      </pre>
+    `;
+    document.getElementById('practiceCode').style.fontSize = '15px';
+  }
+
+  function goNext02() {
+    /* document.getElementById('codeContainer').style.display = 'none'; */
+    document.getElementById('practiceContainer').style.display = 'block';
+    document.getElementById('practiceContainer').innerHTML = `
+      <h3>레벨업 미션 문제</h3>
+      <pre id="practiceCode">
+레벨업 01. epochs과 batch_size 등의 값을 수정하여 accuracy를 개선시켜보자.(개선 결과 공유. 모두적용. 각 10점)
+
+레벨업 02. loss를 sparse_categorical_crossentropy로 변경해서 확인해 보자.(5명, 각30점)
+
+      </pre>
+    `;
+    document.getElementById('practiceCode').style.fontSize = '15px';
+  }
+  function goNext03() {
+    /* document.getElementById('codeContainer').style.display = 'none'; */
+    document.getElementById('practiceContainer').style.display = 'block';
+    document.getElementById('practiceContainer').innerHTML = `
+      <h2>미션 도전 문제</h2>
+      <pre id="practiceCode">
+레벨업 01. -- (코드-댓글 남기기)
+      </pre>
+    `;
+    document.getElementById('practiceCode').style.fontSize = '15px';
+  }
+</script>
+</body>
+</html>
