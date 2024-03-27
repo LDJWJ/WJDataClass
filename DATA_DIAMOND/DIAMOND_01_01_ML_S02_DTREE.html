@@ -50,36 +50,32 @@
 </script>
 <body>
   <div id="codeContainer">
-  <h2> 모델 학습 및 평가(MAPE) </h2>  
+  <h2> 기본 모델 만들기2 - 의사결정트리 </h2>  
   <textarea id="pythonCode" rows="10" cols="50">
 
-from sklearn.neighbors import KNeighborsRegressor
-from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+import seaborn as sns
+
+## 데이터 불러오기 
+dat = sns.load_dataset("diamonds")
+print(dat.columns)
+dat
 
 ## 특성과 타켓을 분리한다.
 # 특성과 타겟 분리
-X = train.drop('price', axis=1)
+X = dat.drop('price', axis=1)
 X_sel = X[ ["carat", "depth", "table", "x", "y", "z" ] ]
-y = train['price']
+y = dat['price']
 
-# 학습 데이터와 검증 데이터로 분할
-X_train, X_val, y_train, y_val = train_test_split(X_sel, y, test_size=0.2, random_state=42)
-
-# KNN 모델 생성
-knn_model = KNeighborsRegressor(n_neighbors=5)
+# 의사결정트리 모델 생성
+dtree_model = DecisionTreeClassifier()
 
 # 모델 훈련
-knn_model.fit(X_train, y_train)
+dtree_model.fit(X_sel, y)
 
 # 모델 예측
-y_pred = knn_model.predict(X_val)
-
-# MAPE(Mean Absolute Percentage Error) 계산
-def calculate_mape(y_true, y_pred):
-    return 100 * (abs((y_true - y_pred) / y_true)).mean()
-
-mape = calculate_mape(y_val, y_pred)
-print(f"MAPE: {mape:.2f}%")
+y_pred = dtree_model.predict(X_sel)
+y_pred
 
   </textarea>
   <div id="highlightedCode"></div>

@@ -50,16 +50,21 @@
 </script>
 <body>
   <div id="codeContainer">
-  <h2> 기본 모델 만들기 </h2>  
+  <h2> 기본 모델 만들기1 - KNN 모델(특징하나) </h2>  
   <textarea id="pythonCode" rows="10" cols="50">
 
 from sklearn.neighbors import KNeighborsRegressor
+import seaborn as sns
+
+## 데이터 불러오기 
+dat = sns.load_dataset("diamonds")
+print(dat.columns)
+dat
 
 ## 특성과 타켓을 분리한다.
 # 특성과 타겟 분리
-X = train.drop('price', axis=1)
-X_sel = X[ ["carat", "depth", "table", "x", "y", "z" ] ]
-y = train['price']
+X_sel = dat[['carat']]
+y = dat['price']
 
 # KNN 모델 생성
 knn_model = KNeighborsRegressor(n_neighbors=5)

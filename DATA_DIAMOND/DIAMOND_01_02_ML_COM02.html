@@ -50,10 +50,10 @@
 </script>
 <body>
   <div id="codeContainer">
-  <h2> 앙상블(RandomForest) 모델 구축 및 평가 </h2>  
+  <h2> 모델 학습 및 평가(MAE)-의사결정트리 </h2>  
   <textarea id="pythonCode" rows="10" cols="50">
 
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.tree import DecisionTreeRegressor
 from sklearn.model_selection import train_test_split
 import seaborn as sns
 
@@ -71,21 +71,21 @@ y = dat['price']
 # 학습 데이터와 검증 데이터로 분할
 X_train, X_val, y_train, y_val = train_test_split(X_sel, y, test_size=0.2, random_state=42)
 
-# RandomForest 모델 생성
-rf_model = RandomForestRegressor(n_estimators=100, random_state=77)
+# 의사결정 모델 생성
+knn_model = DecisionTreeRegressor()
 
 # 모델 훈련
-rf_model.fit(X_train, y_train)
+knn_model.fit(X_train, y_train)
 
 # 모델 예측
-y_pred = rf_model.predict(X_val)
+y_pred = knn_model.predict(X_val)
 
-# MAPE(Mean Absolute Percentage Error) 계산
-def calculate_mape(y_true, y_pred):
-    return 100 * (abs((y_true - y_pred) / y_true)).mean()
+# MAE(Mean Absolute Error) 계산
+def calculate_mae(y_true, y_pred):
+    return abs((y_true - y_pred)).mean()
 
-mape = calculate_mape(y_val, y_pred)
-print(f"MAPE: {mape:.2f}%")
+mae = calculate_mae(y_val, y_pred)
+print(f"MAE: {mae:.2f}")
 
   </textarea>
   <div id="highlightedCode"></div>
@@ -107,9 +107,9 @@ print(f"MAPE: {mape:.2f}%")
     document.getElementById('practiceContainer').innerHTML = `
       <h3>기본 미션 문제</h3>
       <pre id="practiceCode">
-기본 01. n_estimators를 100부터 1000까지 해 보면서 가장 좋은 값을 찾아보자.
+기본 01. 의사결정트리에 대한 모델 구축과 평가를 수행해 보자.
 
-기본 02. test_size를 변경해 보면서 가장 좋은 결과를 가지고 오는 값이 무엇인지 찾아보자.
+기본 02. 
 
 기본 03. --
       </pre>
@@ -123,7 +123,7 @@ print(f"MAPE: {mape:.2f}%")
     document.getElementById('practiceContainer').innerHTML = `
       <h3>레벨업 미션 문제</h3>
       <pre id="practiceCode">
-레벨업 01. --(코드 공유하기)
+레벨업 01. MAPE(Mean Absolute Percentage Error) 평가지표로 계산해 보자.
 
 레벨업 02. --(내용 공유하기)
 
