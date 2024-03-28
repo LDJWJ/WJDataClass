@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Python 코드</title>
+  <style>
+    .keyword {
+      color: blue;
+      font-weight: bold;
+    }
+    .comment {
+      color: green;
+      font-style: italic;
+      font-family: 'D2Coding', monospace;
+    }
+    pre {
+      font-family: 'D2Coding', monospace;
+    }
+  </style>
+</head>
+<script>
+  window.addEventListener('DOMContentLoaded', function() {
+    highlightCode();
+  });
+
+  function highlightCode() {
+    var pythonCode = document.getElementById('pythonCode').value;
+    var highlightedCode = highlightPythonCode(pythonCode);
+    document.getElementById('highlightedCode').innerHTML = highlightedCode;
+
+    // pythonCode 영역 숨기기
+    document.getElementById('pythonCode').style.display = 'none';
+  }
+
+  function highlightPythonCode(code) {
+    code = code.replace(/</g, '&lt;').replace(/>/g, '&gt;'); // Escape HTML tags
+
+    var keywords = ['and', 'as', 'assert', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield'];
+
+    code = code.replace(/([A-Za-z_]\w*)/g, function(match, p1) {
+      if (keywords.includes(p1)) {
+        return '<span class="keyword">' + p1 + '</span>';
+      }
+      return match;
+    });
+
+    code = code.replace(/(#[^\n]*)/g, '<span class="comment">$1</span>');
+
+    return '<pre>' + code + '</pre>';
+  }
+</script>
+<body>
+  <div id="codeContainer">
+  <h2> 나의 첫번째 딥러닝 모델 만들기 - 모델 학습 </h2>  
+  <textarea id="pythonCode" rows="10" cols="50">
+# 01. 라이브러리 불러오기
+import torch
+import torch.nn as nn
+
+# 02. 모델 정의 및 인스턴스 생성 
+class SimpleModel(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.linear = nn.Linear(1, 1)  # 입력 차원 1, 출력 차원 1
+    
+    def forward(self, x):
+        return self.linear(x)
+
+# 모델 인스턴스 생성
+model = SimpleModel()
+print(model, type(model))
+
+# 데이터 및 레이블 생성
+X = torch.randn(100, 1)  # 100개의 입력 데이터 (랜덤)
+y = 2 * X + 0.5  # 선형 함수로 레이블 생성 (y = 2x + 0.5)
+print(X)
+print(y)
+
+# 손실 함수와 optimizer 정의
+criterion = nn.MSELoss()
+optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
+
+# 모델 학습
+epochs = 1000
+for epoch in range(epochs):
+    y_pred = model(X)  # 예측값 계산
+    loss = criterion(y_pred, y)  # 손실 계산
+    
+    optimizer.zero_grad()  # 기울기 초기화
+    loss.backward()  # 역전파
+    optimizer.step()  # 파라미터 업데이트
+
+print(f"학습 후 예측값: {model(torch.tensor([[3.0]])).item():.2f}")
+  </textarea>
+  <div id="highlightedCode"></div>
+  </div>
+  <div id="practiceContainer" style="display: none;"></div>
+  <!-- <button onclick="goBack()">홈으로</button> -->
+  <button onclick="goNext01()">기본 미션</button>
+  <button onclick="goNext02()">레벨업 미션</button><br><br>
+  <div> * 성실한 태도, 작은 나의 땀과 노력이 모여 미래를 만듭니다. 정직, 성실 소중한 가치</div>
+</div>
+<script>
+  function goBack() {
+    window.location.href = "../01_DLSTART.html";
+  }
+
+  function goNext01() {
+    /* document.getElementById('codeContainer').style.display = 'none'; */
+    document.getElementById('practiceContainer').style.display = 'block';
+    document.getElementById('practiceContainer').innerHTML = `
+      <h3>기본 미션 문제</h3>
+      <pre id="practiceCode">
+기본 01. 입력층 부분의 피처의 수를 2개로 변경해 보기.(코드 공유하기)
+
+기본 02. 입력층 부분의 피처의 수를 30개로 변경해 보기.(코드 공유하기)
+
+기본 03. 맨 마지막 출력층의 뉴런 수를 10개로 해보자.(코드 공유하기)
+      </pre>
+    `;
+    document.getElementById('practiceCode').style.fontSize = '15px';
+  }
+
+  function goNext02() {
+    /* document.getElementById('codeContainer').style.display = 'none'; */
+    document.getElementById('practiceContainer').style.display = 'block';
+    document.getElementById('practiceContainer').innerHTML = `
+      <h3>레벨업 미션 문제</h3>
+      <pre id="practiceCode">
+레벨업 01. 은닉층을 하나 추가해 보기(코드 공유하기)
+
+레벨업 02. 은닉층을 추가했을 때, 변경된 내용은 무엇인지 확인 후, 메모해 보자(내용 공유하기)
+
+
+      </pre>
+    `;
+    document.getElementById('practiceCode').style.fontSize = '15px';
+  }
+  function goNext03() {
+    /* document.getElementById('codeContainer').style.display = 'none'; */
+    document.getElementById('practiceContainer').style.display = 'block';
+    document.getElementById('practiceContainer').innerHTML = `
+      <h2>미션 도전 문제</h2>
+      <pre id="practiceCode">
+레벨업 01. -- (코드-댓글 남기기)
+      </pre>
+    `;
+    document.getElementById('practiceCode').style.fontSize = '15px';
+  }
+</script>
+</body>
+</html>
