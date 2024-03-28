@@ -50,43 +50,46 @@
 </script>
 <body>
   <div id="codeContainer">
-  <h2> 데이터 셋 만들기 </h2>  
+  <h2> 하나의 데이터 셋으로 여러 파일 만들기 </h2>  
   <textarea id="pythonCode" rows="10" cols="50">
-# 사전 데이터 셋을 만들기 전에 data 폴더를 만들어준다.
+
 # 01. 라이브러리 불러오기
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import sys
+import os
 import seaborn as sns
 from sklearn.model_selection import train_test_split
 
-# 02. 데이터 불러오기 
+# 02. 데이터 폴더 생성
+# "data" 폴더가 없으면 생성
+if not os.path.exists("data"):
+    os.makedirs("data")
+
+# 03. 데이터 불러오기 
 dat = sns.load_dataset("diamonds")
 dat
 
-# 03. 데이터 만들기
-# 데이터를 학습 데이터와 테스트 데이터로 분할합니다.
+# 04. 데이터 만들기
+# 데이터를 학습 데이터와 테스트 데이터로 분할(8:2)합니다.
 train_data, test_data = train_test_split(dat, test_size=0.2, random_state=42)
 
-# train.csv 파일에 학습 데이터를 저장합니다.
+# 05. train.csv 학습 데이터 셋 생성
 train_data.to_csv('data/train.csv', index=False)
 
-# test.csv 파일에 테스트 데이터를 저장하되 "price" 열을 제거합니다.
+# 06. test.csv 테스트 데이터 셋 생성. "price" 열을 제거합니다.
 test_data.drop('price', axis=1, inplace=True)
 test_data.to_csv('data/test.csv', index=False)
 
-# sample_submission.csv 파일을 생성합니다.
+# 07. sample_submission.csv 파일을 생성합니다.
 sample_submission = pd.DataFrame({'price': [0] * len(test_data)})
 sample_submission.to_csv('data/sample_submission.csv', index=False)
 
-
-# 04 정보 확인 - 컬럼명 확인
+# 08 정보 확인 - 컬럼명 확인
 print(train_data.columns)
 print(test_data.columns)
 print(sample_submission.columns)
 
-# 05 정보 확인 - 데이터 5행 확인
+# 09 정보 확인 - 데이터 5행 확인
 train_data.head()
 test_data.head()
 sample_submission.head()

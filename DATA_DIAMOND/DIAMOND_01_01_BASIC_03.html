@@ -68,11 +68,19 @@ test = load_csv(TEST_PATH)
 sub = load_csv(SUBMISSION_PATH)
 
 # 학습용 데이터 셋 탐색 - 컬럼명 확인, 행열 확인, 앞의 7행 확인, 결측치 확인
-print(train.columns); train.shape
-train.head(7)
-train.info()
+test.columns; train.columns; sub.columns
 
-# 
+# 행열 확인
+# 직접 해보기 1
+
+# 데이터 확인(앞의 7행)
+print(train.head(7))
+print(test.head(7))
+print(sub.head(7))
+
+# 결측치 및 데이터 셋 정보 확인
+# 직접 해보기 2
+
 
   </textarea>
   <div id="highlightedCode"></div>
@@ -94,9 +102,9 @@ train.info()
     document.getElementById('practiceContainer').innerHTML = `
       <h3>기본 미션 문제</h3>
       <pre id="practiceCode">
-기본 01. test 데이터 셋 탐색하기(코드 공유하기)
+기본 01. train 데이터 셋 탐색하기(코드 공유하기)
 
-기본 02. sub 데이터 셋 탐색하기(코드 공유하기)
+기본 02. test, sub 데이터 셋 탐색하기(코드 공유하기)
 
 기본 03. train와 test 데이터 셋의 차이는 무엇인가? sub는 무엇을 위한 데이터 셋인가?(코드 공유하기)
       </pre>
@@ -110,9 +118,9 @@ train.info()
     document.getElementById('practiceContainer').innerHTML = `
       <h3>레벨업 미션 문제</h3>
       <pre id="practiceCode">
-레벨업 01. --(코드 공유하기)
+레벨업 01. train 데이터 셋을 활용하여 머신러닝 모델을 만들어보기.
 
-레벨업 02. --(내용 공유하기)
+레벨업 02. train 데이터 셋을 활용하여 모델을 만들고 평가를 수행해 보기.
 
 
       </pre>

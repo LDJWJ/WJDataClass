@@ -50,42 +50,45 @@
 </script>
 <body>
   <div id="codeContainer">
-  <h2> 앙상블(RandomForest) 모델 구축 및 평가 </h2>  
+  <h2> 데이터 셋 만들기 </h2>  
   <textarea id="pythonCode" rows="10" cols="50">
-
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import train_test_split
+# 사전 데이터 셋을 만들기 전에 data 폴더를 만들어준다.
+# 01. 라이브러리 불러오기
+import pandas as pd
+import numpy as np
+import sys
 import seaborn as sns
+from sklearn.model_selection import train_test_split
 
-## 데이터 불러오기 
+# 02. 데이터 불러오기 
 dat = sns.load_dataset("diamonds")
-print(dat.columns)
 dat
 
-## 특성과 타켓을 분리한다.
-# 특성과 타겟 분리
-X = dat.drop('price', axis=1)
-X_sel = X[ ["carat", "depth", "table", "x", "y", "z" ] ]
-y = dat['price']
+# 03. 데이터 만들기
+# 데이터를 학습 데이터와 테스트 데이터로 분할합니다.
+train_data, test_data = train_test_split(dat, test_size=0.2, random_state=42)
 
-# 학습 데이터와 검증 데이터로 분할
-X_train, X_val, y_train, y_val = train_test_split(X_sel, y, test_size=0.2, random_state=42)
+# train.csv 파일에 학습 데이터를 저장합니다.
+train_data.to_csv('data/train.csv', index=False)
 
-# RandomForest 모델 생성
-rf_model = RandomForestRegressor(n_estimators=100, random_state=77)
+# test.csv 파일에 테스트 데이터를 저장하되 "price" 열을 제거합니다.
+test_data.drop('price', axis=1, inplace=True)
+test_data.to_csv('data/test.csv', index=False)
 
-# 모델 훈련
-rf_model.fit(X_train, y_train)
+# sample_submission.csv 파일을 생성합니다.
+sample_submission = pd.DataFrame({'price': [0] * len(test_data)})
+sample_submission.to_csv('data/sample_submission.csv', index=False)
 
-# 모델 예측
-y_pred = rf_model.predict(X_val)
 
-# MAPE(Mean Absolute Percentage Error) 계산
-def calculate_mape(y_true, y_pred):
-    return 100 * (abs((y_true - y_pred) / y_true)).mean()
+# 04 정보 확인 - 컬럼명 확인
+print(train_data.columns)
+print(test_data.columns)
+print(sample_submission.columns)
 
-mape = calculate_mape(y_val, y_pred)
-print(f"MAPE: {mape:.2f}%")
+# 05 정보 확인 - 데이터 5행 확인
+train_data.head()
+test_data.head()
+sample_submission.head()
 
   </textarea>
   <div id="highlightedCode"></div>
@@ -107,10 +110,11 @@ print(f"MAPE: {mape:.2f}%")
     document.getElementById('practiceContainer').innerHTML = `
       <h3>기본 미션 문제</h3>
       <pre id="practiceCode">
-기본 01. n_estimators를 100부터 1000까지 해 보면서 가장 좋은 값을 찾아보자.
+기본 01. --(코드 공유하기)
 
-기본 02. test_size를 변경해 보면서 가장 좋은 결과를 가지고 오는 값이 무엇인지 찾아보자.
+기본 02. --(코드 공유하기)
 
+기본 03. --(코드 공유하기)
       </pre>
     `;
     document.getElementById('practiceCode').style.fontSize = '15px';
