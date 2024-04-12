@@ -6,7 +6,7 @@ web : https://ldjwj.github.io/WJDataClass/
  * 유튜브 수업 동영상 - 모듈 만들기
  * A. Visual Studio Code에서 작업 폴더 추가 새 파일 만들기 [영상](https://youtu.be/UwJdG0_Y7lk)
  * B. 모듈 만들기, 모듈 불러와서 사용해 보기 - [영상](https://youtu.be/IJGFcI31oR8)
- * A, B 관련 실습 기본 문제
+   * A, B 관련 실습 기본 문제
 ```
 (기본 문제1) (mymod1.py)에 아래 형태를 갖는 *, /를 하는 함수를 하나 추가해 보자.
 def two_op2(a, b=0):
