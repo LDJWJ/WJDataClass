@@ -4,7 +4,7 @@ web : https://ldjwj.github.io/WJDataClass/
 
 ### 다이아몬드 데이터 셋 실전 분석 - [이동](https://ldjwj.github.io/WJDataClass/01_DATA_ML_DIAMOND.html)
   *유튜브 동영상 - 모듈 만들기 
-    * 01. Visual Studio Code에서 작업 폴더 추가 새 파일 만들기 [동영상 링크](https://youtu.be/UwJdG0_Y7lk) 
+    * 01. Visual Studio Code에서 작업 폴더 추가 새 파일 만들기 [동영상 링크](https://youtu.be/UwJdG0_Y7lk)
     
     * 02. 모듈 만들기, 모듈 불러와서 사용해 보기 [Visual Stdio Code 환경](https://youtu.be/IJGFcI31oR8)
     
